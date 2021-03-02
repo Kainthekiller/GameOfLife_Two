@@ -12,6 +12,7 @@ namespace GameOfLife_Two
 {
     public partial class Form1 : Form
     {
+        int num = 1;
         // The universe array   
         bool[,] universe = new bool[5, 5];
 
