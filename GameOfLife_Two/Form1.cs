@@ -7,19 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GameOfLife_Two
 {
     public partial class Form1 : Form
     {
-        int num = 1;
-        // The universe array   
-        bool[,] universe = new bool[5, 5];
+      
+        // The universe array   //x = accross //y = down    
+        bool[,] universe = new bool[30, 30];
 
         // Drawing colors
-        Color gridColor = Color.Black;
-        Color cellColor = Color.Gray;
-
+        Color gridColor = Color.Black; // Lines color for grids
+        Color cellColor = Color.DarkGray; // Background of cell when its alive
+        Color numberColor = Color.Green; // Changes Number Color
         // The Timer class
         Timer timer = new Timer();
 
@@ -28,6 +29,7 @@ namespace GameOfLife_Two
 
         public Form1()
         {
+             
             InitializeComponent();
 
             // Setup the timer
@@ -67,6 +69,7 @@ namespace GameOfLife_Two
 
             // A Brush for filling living cells interiors (color)
             Brush cellBrush = new SolidBrush(cellColor);
+            Brush numBrush = new SolidBrush(numberColor);
 
             // Iterate through the universe in the y, top to bottom
             for (int y = 0; y < universe.GetLength(1); y++)
@@ -85,6 +88,14 @@ namespace GameOfLife_Two
                     if (universe[x, y] == true)
                     {
                         e.Graphics.FillRectangle(cellBrush, cellRect);
+                       
+                        Font font = new Font("Arial", 20f); // Adds Text to the box
+                        StringFormat stringFormat = new StringFormat();
+                        stringFormat.Alignment = StringAlignment.Center;
+                        stringFormat.LineAlignment = StringAlignment.Center;
+                        Rectangle rect = new Rectangle(0, 0, 100, 100);
+                        e.Graphics.DrawString("A", font, Brushes.Black, cellRect, stringFormat); // Draws A in the middle of the boxes
+                      
                     }
 
                     // Outline the cell with a pen
@@ -133,5 +144,15 @@ namespace GameOfLife_Two
             graphicsPanel1.Invalidate();
         }
 
+        //Start Game of life by pressing start button
+        private void StartBTN_Click(object sender, EventArgs e)
+        {
+            timer.Enabled = true;
+        }
+        //Stop Game of life by pressing stop button
+        private void StopBTN_Click(object sender, EventArgs e)
+        {
+            timer.Enabled = false;
+        }
     }
 }
