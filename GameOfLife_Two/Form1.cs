@@ -154,5 +154,14 @@ namespace GameOfLife_Two
         {
             timer.Enabled = false;
         }
+
+        //Exit BTN Pressed Closes Program
+        private void ExitBTN_Click(object sender, EventArgs e)
+        {
+            if (System.Windows.Forms.Application.MessageLoop)
+            {
+                System.Windows.Forms.Application.Exit();
+            }
+        }
     }
 }
