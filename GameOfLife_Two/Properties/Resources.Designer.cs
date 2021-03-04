@@ -59,14 +59,5 @@ namespace GameOfLife_Two.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to My App....
-        /// </summary>
-        internal static string AppTitle {
-            get {
-                return ResourceManager.GetString("AppTitle", resourceCulture);
-            }
-        }
     }
 }

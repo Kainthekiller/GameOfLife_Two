@@ -48,6 +48,20 @@ namespace GameOfLife_Two
 
             // Update status strip generations
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                // Iterate through the universe in the x, left to right
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+
+                    if (universe[x, y] == true)
+                    {
+                      
+                    }
+
+                }
+
+            }
         }
 
         // The event called by the timer every Interval milliseconds.
@@ -113,15 +127,16 @@ namespace GameOfLife_Two
             // If the left mouse button was clicked
             if (e.Button == MouseButtons.Left)
             {
+
                 // Calculate the width and height of each cell in pixels
-                int cellWidth = graphicsPanel1.ClientSize.Width / universe.GetLength(0);
-                int cellHeight = graphicsPanel1.ClientSize.Height / universe.GetLength(1);
+                float cellWidth = (float)graphicsPanel1.ClientSize.Width / (float)universe.GetLength(0);
+                float cellHeight = (float)graphicsPanel1.ClientSize.Height / (float)universe.GetLength(1);
 
                 // Calculate the cell that was clicked in
                 // CELL X = MOUSE X / CELL WIDTH
-                int x = e.X / cellWidth;
+                int x = (int)(e.X / cellWidth);
                 // CELL Y = MOUSE Y / CELL HEIGHT
-                int y = e.Y / cellHeight;
+                int y = (int)(e.Y / cellHeight);
 
                 // Toggle the cell's state
                 universe[x, y] = !universe[x, y];
@@ -130,9 +145,20 @@ namespace GameOfLife_Two
                 graphicsPanel1.Invalidate();
             }
         }
+
+
+
+
+
+
+
+
+
+        //TODO: Reset Generation on new
         //New Game Button clicked resets all 
         private void NewClicked(object sender, EventArgs e)
         {
+       
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 // Iterate through the universe in the x, left to right
@@ -141,27 +167,91 @@ namespace GameOfLife_Two
                     universe[x, y] = false;
                 }
             }
+            generations = 0;
             graphicsPanel1.Invalidate();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //Counts Neighbors Alive FINITE !!!!
+        private int CountNeighborsFinite(int x, int y)
+        {
+            int count = 0;
+            int xLen = universe.GetLength(0);
+            int yLen = universe.GetLength(1);
+
+            for(int yOffset = -1; yOffset < 2; yOffset++)
+            {
+                for (int xOffset = 0; xOffset < 2; xOffset++)
+                {
+                    int xCheck = x + xOffset;
+                    int yCheck = y + yOffset;
+
+                    // if xOffset and yOffset are both equal to 0 then continue
+                    if (xOffset == 0 && yOffset == 0)
+                    {
+                        continue;
+                    }
+                    // if xCheck is less than 0 then continue
+                    if (xCheck < 0)
+                    {
+                        continue;
+                    }
+                    // if yCheck is less than 0 then continue
+                    if (yCheck < 0)
+                    {
+                        continue;
+                    }
+                    // if xCheck is greater than or equal too xLen then continue
+                    if (xCheck >= xLen)
+                    {
+                        continue;
+                    }
+                    // if yCheck is greater than or equal too yLen then continue
+                    if (yCheck >= yLen)
+                    {
+                        continue;
+                    }
+                    //Check if neighbor is a alive via true and adds to count checks 8 spots;
+                    if(universe[xCheck, yCheck] == true)
+                    {
+                        count++;
+                    }
+
+                }
+            }
+            return count;
+        }
+
 
         //Start Game of life by pressing start button
         private void StartBTN_Click(object sender, EventArgs e)
         {
             timer.Enabled = true;
+            graphicsPanel1.Invalidate();
         }
         //Stop Game of life by pressing stop button
         private void StopBTN_Click(object sender, EventArgs e)
         {
             timer.Enabled = false;
+            graphicsPanel1.Invalidate();
         }
 
         //Exit BTN Pressed Closes Program
         private void ExitBTN_Click(object sender, EventArgs e)
         {
-            if (System.Windows.Forms.Application.MessageLoop)
-            {
-                System.Windows.Forms.Application.Exit();
-            }
+            //Simple
+            this.Close();
         }
     }
 }
