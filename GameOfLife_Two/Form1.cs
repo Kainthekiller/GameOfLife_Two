@@ -20,7 +20,7 @@ namespace GameOfLife_Two
 {
     public partial class Form1 : Form
     {
-
+        int num = 1;
         // The universe array   //x = accross //y = down    
         bool[,] universe = new bool[30, 30];
         bool[,] scratchPad = new bool[30, 30];
