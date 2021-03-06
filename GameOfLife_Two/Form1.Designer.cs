@@ -82,7 +82,7 @@ namespace GameOfLife_Two
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2456, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(2456, 36);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -254,10 +254,10 @@ namespace GameOfLife_Two
             this.StartBTN,
             this.toolStripButton2,
             this.NextBTN});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 33);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 36);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(2456, 33);
+            this.toolStrip1.Size = new System.Drawing.Size(2456, 38);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.Click += new System.EventHandler(this.StopBTN_Click);
@@ -343,19 +343,23 @@ namespace GameOfLife_Two
             this.StartBTN.Image = ((System.Drawing.Image)(resources.GetObject("StartBTN.Image")));
             this.StartBTN.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.StartBTN.Name = "StartBTN";
-            this.StartBTN.Size = new System.Drawing.Size(34, 33);
+            this.StartBTN.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
+            this.StartBTN.Size = new System.Drawing.Size(128, 28);
             this.StartBTN.Text = "Start";
             this.StartBTN.Click += new System.EventHandler(this.StartBTN_Click);
             // 
             // NextBTN
             // 
-            this.NextBTN.BackColor = System.Drawing.Color.Yellow;
+            this.NextBTN.BackColor = System.Drawing.Color.Violet;
             this.NextBTN.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.NextBTN.Enabled = false;
             this.NextBTN.Image = ((System.Drawing.Image)(resources.GetObject("NextBTN.Image")));
             this.NextBTN.ImageTransparentColor = System.Drawing.Color.Gold;
             this.NextBTN.Name = "NextBTN";
-            this.NextBTN.Size = new System.Drawing.Size(34, 33);
+            this.NextBTN.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
+            this.NextBTN.Size = new System.Drawing.Size(128, 33);
             this.NextBTN.Text = "Stop";
+            this.NextBTN.ToolTipText = "Next";
             this.NextBTN.Click += new System.EventHandler(this.NextBTN_Click);
             // 
             // statusStrip1
@@ -378,22 +382,23 @@ namespace GameOfLife_Two
             // 
             // toolStripButton2
             // 
-            this.toolStripButton2.BackColor = System.Drawing.Color.Red;
+            this.toolStripButton2.BackColor = System.Drawing.Color.Yellow;
             this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(34, 33);
-            this.toolStripButton2.Text = "Stop";
+            this.toolStripButton2.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
+            this.toolStripButton2.Size = new System.Drawing.Size(128, 33);
+            this.toolStripButton2.Text = "Pause";
             // 
             // graphicsPanel1
             // 
             this.graphicsPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.graphicsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graphicsPanel1.Location = new System.Drawing.Point(0, 66);
+            this.graphicsPanel1.Location = new System.Drawing.Point(0, 74);
             this.graphicsPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.graphicsPanel1.Name = "graphicsPanel1";
-            this.graphicsPanel1.Size = new System.Drawing.Size(2456, 1220);
+            this.graphicsPanel1.Size = new System.Drawing.Size(2456, 1212);
             this.graphicsPanel1.TabIndex = 3;
             this.graphicsPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel1_Paint);
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
