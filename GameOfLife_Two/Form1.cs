@@ -20,7 +20,7 @@ namespace GameOfLife_Two
 {
     public partial class Form1 : Form
     {
-        int num = 1;
+        
         // The universe array   //x = accross //y = down    
         bool[,] universe = new bool[30, 30];
         bool[,] scratchPad = new bool[30, 30];
@@ -343,7 +343,7 @@ namespace GameOfLife_Two
             }
             return count;
         }
-        
+
 
 
         //BUTTONS !!!!!!!!!!!!!
@@ -369,7 +369,7 @@ namespace GameOfLife_Two
             //updates status strip Generations;
             toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
             graphicsPanel1.Invalidate();
-            
+
 
         }
 
@@ -385,7 +385,7 @@ namespace GameOfLife_Two
         //Stop Game of life by pressing stop button
         private void StopBTN_Click(object sender, EventArgs e)
         {
-           
+
             timer.Stop();
             NextBTN.Enabled = true;
             graphicsPanel1.Invalidate();
@@ -397,12 +397,37 @@ namespace GameOfLife_Two
             //Simple
             this.Close();
         }
-      
+
         private void NextBTN_Click(object sender, EventArgs e)
         {
             //Button Disabled inside Start and Enabled when Pause is pressed.
             NextGeneration();
             graphicsPanel1.Invalidate();
         }
+
+
+
+        //Regular RandomIzer
+        private void RandomNoSeed_Click(object sender, EventArgs e)
+        {
+            var rando = new Random();
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                // Iterate through the universe in the x, left to right
+                //MAIN IF STATMENT LOCATION WHERE ALL MAGIC HAPPENS !!!
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+
+                    universe[x, y] = rando.Next(100) % 2 == 0;
+                    Console.WriteLine(rando.Next(100));
+                    graphicsPanel1.Invalidate();
+
+                }
+            }
+
+            
+        }
     }
 }
+    
+
