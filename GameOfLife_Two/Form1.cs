@@ -22,8 +22,8 @@ namespace GameOfLife_Two
     {
         
         // The universe array   //x = accross //y = down    
-        bool[,] universe = new bool[30, 30];
-        bool[,] scratchPad = new bool[30, 30];
+        bool[,] universe = new bool[100, 100];
+        bool[,] scratchPad = new bool[100, 100];
         // Drawing colors
         Color gridColor = Color.Black; // Lines color for grids
         Color cellColor = Color.DarkGray; // Background of cell when its alive
@@ -350,7 +350,7 @@ namespace GameOfLife_Two
 
 
 
-        //TODO: Reset Generation on new
+        
         //New Game Button clicked resets all 
         private void NewClicked(object sender, EventArgs e)
         {
@@ -393,6 +393,7 @@ namespace GameOfLife_Two
         //Exit BTN Pressed Closes Program
         private void ExitBTN_Click(object sender, EventArgs e)
         {
+
             //Simple
             this.Close();
         }
@@ -404,16 +405,15 @@ namespace GameOfLife_Two
             graphicsPanel1.Invalidate();
         }
 
+        
 
-
-        //Regular RandomIzer
+        //Regular Randomizer *Completed
         private void RandomNoSeed_Click(object sender, EventArgs e)
         {
             var rando = new Random();
             for (int y = 0; y < universe.GetLength(1); y++)
             {
-                // Iterate through the universe in the x, left to right
-                //MAIN IF STATMENT LOCATION WHERE ALL MAGIC HAPPENS !!!
+
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
 
@@ -425,6 +425,31 @@ namespace GameOfLife_Two
             }
 
             
+        }
+
+
+        //Seed Randomizer *Completed
+        public void Random_Seed_Click(object sender, EventArgs e)
+        {
+            ModalDialog dlg = new ModalDialog();
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                dlg.Seed = dlg.Seed;
+                
+                //User input recorded
+                var rando = new Random((int)dlg.Seed);
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+
+                        universe[x, y] = rando.Next(100) % 2 == 0;
+                        graphicsPanel1.Invalidate();
+
+                    }
+                }
+            }
+       
         }
     }
 }
