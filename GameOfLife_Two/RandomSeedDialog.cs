@@ -11,9 +11,9 @@ using System.Windows.Forms;
 namespace GameOfLife_Two
 {
  
-    public partial class ModalDialog : Form
+    public partial class RandomSeedDialog : Form
     {
-        public ModalDialog()
+        public RandomSeedDialog()
         {
             InitializeComponent();
          

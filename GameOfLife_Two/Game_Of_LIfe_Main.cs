@@ -23,7 +23,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace GameOfLife_Two
 {
-    public partial class Form1 : Form
+    public partial class Game_Of_LIfe_Main : Form
     {
         
         // The universe array   //x = accross //y = down    
@@ -39,10 +39,15 @@ namespace GameOfLife_Two
         // Generation count
         int generations = 0;
 
-        public Form1()
+        public Game_Of_LIfe_Main()
         {
 
             InitializeComponent();
+
+
+            //Read Settings ******* Read Settings
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+
 
             // Setup the timer
             timer.Interval = 100; // milliseconds
@@ -449,7 +454,7 @@ namespace GameOfLife_Two
         //Seed Randomizer *Completed *Crash Proof
         public void Random_Seed_Click(object sender, EventArgs e)
         {
-            ModalDialog dlg = new ModalDialog();
+            RandomSeedDialog dlg = new RandomSeedDialog();
             if (DialogResult.OK == dlg.ShowDialog())
             {
                 dlg.Seed = dlg.Seed;
@@ -468,6 +473,43 @@ namespace GameOfLife_Two
                 }
             }
        
+        }
+
+        private void BackGround_Color_BTN_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = graphicsPanel1.BackColor;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                graphicsPanel1.BackColor = dlg.Color; 
+
+            }
+        }
+
+        //Overall Form Closes and this code is executed *Holds Settings*
+        private void Game_Of_LIfe_Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //Saves Settings for Background Color
+            Properties.Settings.Default.BackGroundColor = graphicsPanel1.BackColor;
+            Properties.Settings.Default.Save();
+        }
+        
+        //Reset BTN 
+        private void Reset_BTN_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+            //Read Setting agian after reset
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+        }
+
+        //Reload BTN
+        private void Reload_BTN_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reload();
+            //Read Setting Agian after Reload
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
         }
     }
 }

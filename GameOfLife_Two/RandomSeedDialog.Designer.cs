@@ -1,7 +1,7 @@
 ﻿
 namespace GameOfLife_Two
 {
-    partial class ModalDialog
+    partial class RandomSeedDialog
     {
         /// <summary>
         /// Required designer variable.
