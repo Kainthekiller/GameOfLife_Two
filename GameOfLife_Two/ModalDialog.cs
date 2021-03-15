@@ -10,12 +10,13 @@ using System.Windows.Forms;
 
 namespace GameOfLife_Two
 {
+ 
     public partial class ModalDialog : Form
     {
         public ModalDialog()
         {
             InitializeComponent();
-            
+         
         }
 
         public decimal Seed
@@ -30,19 +31,5 @@ namespace GameOfLife_Two
             }
            
         }
-
-
-
-        //C++ but C# 
-        //public decimal GetSeed()
-        //{
-        //    return Seed_Up_Down.Value;
-        //}
-
-        //public void SetSeed(decimal seed)
-        //{
-        //    Seed_Up_Down.Value = seed;
-        //}
-
     }
 }

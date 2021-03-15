@@ -9,10 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 
-//// Swap them...
-//bool[,] temp = universe;
-//universe = scratchPad;
-//scratchPad = temp;
+//TODO: Saving Current Universe
+//TODO: Opening a previously saved universe
+//TODO: Show Number of Liveing Cells *Status Strip
+//TODO: Control Milliseconds between each new generation Option
+//TODO: Control The current size of the universe
+//TODO: VIEW MENU ITEMS TOGGLE GRIDS ON and OFF
+//TODO: VIEW MENU ITEMS TOGGLE neighbor count
+//TODO: Advance Features time to check back on to FSU 
+
 
 
 
@@ -63,7 +68,7 @@ namespace GameOfLife_Two
             generations++;
 
             // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString();
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 // Iterate through the universe in the x, left to right
@@ -134,13 +139,15 @@ namespace GameOfLife_Two
 
 
 
-        // The event called by the timer every Interval milliseconds.
+        // The event called by the timer every Interval milliseconds. *Complete
         private void Timer_Tick(object sender, EventArgs e)
         {
             NextGeneration();
 
         }
 
+
+        //Prolly Needs Some Love *****
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
         {
             // Calculate the width and height of each cell in pixels
@@ -195,6 +202,8 @@ namespace GameOfLife_Two
             cellBrush.Dispose();
         }
 
+
+        //Click true = false and false = true; Knows where you clicked *Not Complete
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
         {
             // If the left mouse button was clicked
@@ -235,11 +244,11 @@ namespace GameOfLife_Two
 
 
 
+        // COUNT NEXT DOOR PEEPS !!!!!!!!!!
 
 
 
-
-        //Counts Neighbors Alive FINITE !!!! //Easy Milestone
+        //Counts Neighbors Alive FINITE !!!! //Easy Milestone *Complete
         private int CountNeighborsFinite(int x, int y)
         {
             int count = 0;
@@ -291,7 +300,7 @@ namespace GameOfLife_Two
 
 
 
-        //Counts Neighbors Toroidal
+        //Counts Neighbors Toroidal  *Not Complete
         private int CountNeighborsToridal(int x, int y)
         {
             int count = 0;
@@ -345,13 +354,19 @@ namespace GameOfLife_Two
 
 
 
+
+
+
+
+
+
         //BUTTONS !!!!!!!!!!!!!
 
 
 
 
         
-        //New Game Button clicked resets all 
+        //New Game Button clicked resets all *Complete
         private void NewClicked(object sender, EventArgs e)
         {
 
@@ -366,14 +381,14 @@ namespace GameOfLife_Two
             }
             generations = 0;
             //updates status strip Generations;
-            toolStripStatusLabelGenerations.Text = "Generations = " + generations.ToString();
+            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString();
             graphicsPanel1.Invalidate();
 
 
         }
 
 
-        //Start Game of life by pressing start button
+        //Start Game of life by pressing start button *Complete
         private void StartBTN_Click(object sender, EventArgs e)
         {
             timer.Interval = 100;
@@ -381,7 +396,9 @@ namespace GameOfLife_Two
             NextBTN.Enabled = false;
             graphicsPanel1.Invalidate();
         }
-        //Stop Game of life by pressing stop button
+
+
+        //Stop Game of life by pressing stop button *Complete
         private void StopBTN_Click(object sender, EventArgs e)
         {
 
@@ -390,7 +407,7 @@ namespace GameOfLife_Two
             graphicsPanel1.Invalidate();
         }
 
-        //Exit BTN Pressed Closes Program
+        //Exit BTN Pressed Closes Program *Complete
         private void ExitBTN_Click(object sender, EventArgs e)
         {
 
@@ -398,6 +415,8 @@ namespace GameOfLife_Two
             this.Close();
         }
 
+
+        //Goes to next Generation *Complete
         private void NextBTN_Click(object sender, EventArgs e)
         {
             //Button Disabled inside Start and Enabled when Pause is pressed.
@@ -405,9 +424,8 @@ namespace GameOfLife_Two
             graphicsPanel1.Invalidate();
         }
 
-        
-
-        //Regular Randomizer *Completed
+      
+        //Regular Randomizer *Completed *Crash Proof
         private void RandomNoSeed_Click(object sender, EventArgs e)
         {
             var rando = new Random();
@@ -428,7 +446,7 @@ namespace GameOfLife_Two
         }
 
 
-        //Seed Randomizer *Completed
+        //Seed Randomizer *Completed *Crash Proof
         public void Random_Seed_Click(object sender, EventArgs e)
         {
             ModalDialog dlg = new ModalDialog();
@@ -443,7 +461,7 @@ namespace GameOfLife_Two
                     for (int x = 0; x < universe.GetLength(0); x++)
                     {
 
-                        universe[x, y] = rando.Next(100) % 2 == 0;
+                        universe[x, y] = rando.Next(0, int.MaxValue) % 2 == 0;
                         graphicsPanel1.Invalidate();
 
                     }

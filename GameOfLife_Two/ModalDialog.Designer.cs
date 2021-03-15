@@ -39,6 +39,11 @@ namespace GameOfLife_Two
             // Seed_Up_Down
             // 
             this.Seed_Up_Down.Location = new System.Drawing.Point(356, 97);
+            this.Seed_Up_Down.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
             this.Seed_Up_Down.Name = "Seed_Up_Down";
             this.Seed_Up_Down.Size = new System.Drawing.Size(120, 26);
             this.Seed_Up_Down.TabIndex = 0;
@@ -85,7 +90,7 @@ namespace GameOfLife_Two
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ModalDialog";
-            this.Text = "Form2";
+            this.Text = "Random Seed";
             ((System.ComponentModel.ISupportInitialize)(this.Seed_Up_Down)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

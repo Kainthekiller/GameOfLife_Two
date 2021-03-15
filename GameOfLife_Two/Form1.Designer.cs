@@ -53,6 +53,7 @@ namespace GameOfLife_Two
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.randomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RandomNoSeed = new System.Windows.Forms.ToolStripMenuItem();
+            this.Random_Seed = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -69,7 +70,6 @@ namespace GameOfLife_Two
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelGenerations = new System.Windows.Forms.ToolStripStatusLabel();
             this.graphicsPanel1 = new GameOfLife_Two.GraphicsPanel();
-            this.Random_Seed = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -86,7 +86,6 @@ namespace GameOfLife_Two
             this.randomToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.menuStrip1.Size = new System.Drawing.Size(2253, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
@@ -217,30 +216,30 @@ namespace GameOfLife_Two
             // contentsToolStripMenuItem
             // 
             this.contentsToolStripMenuItem.Name = "contentsToolStripMenuItem";
-            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.contentsToolStripMenuItem.Size = new System.Drawing.Size(185, 34);
             this.contentsToolStripMenuItem.Text = "&Contents";
             // 
             // indexToolStripMenuItem
             // 
             this.indexToolStripMenuItem.Name = "indexToolStripMenuItem";
-            this.indexToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.indexToolStripMenuItem.Size = new System.Drawing.Size(185, 34);
             this.indexToolStripMenuItem.Text = "&Index";
             // 
             // Search
             // 
             this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(270, 34);
+            this.Search.Size = new System.Drawing.Size(185, 34);
             this.Search.Text = "&Search";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(267, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(182, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(185, 34);
             this.aboutToolStripMenuItem.Text = "&About...";
             // 
             // randomToolStripMenuItem
@@ -249,15 +248,22 @@ namespace GameOfLife_Two
             this.RandomNoSeed,
             this.Random_Seed});
             this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
-            this.randomToolStripMenuItem.Size = new System.Drawing.Size(96, 29);
-            this.randomToolStripMenuItem.Text = "Random";
+            this.randomToolStripMenuItem.Size = new System.Drawing.Size(123, 29);
+            this.randomToolStripMenuItem.Text = "Randomizer";
             // 
             // RandomNoSeed
             // 
             this.RandomNoSeed.Name = "RandomNoSeed";
-            this.RandomNoSeed.Size = new System.Drawing.Size(270, 34);
+            this.RandomNoSeed.Size = new System.Drawing.Size(226, 34);
             this.RandomNoSeed.Text = "Random";
             this.RandomNoSeed.Click += new System.EventHandler(this.RandomNoSeed_Click);
+            // 
+            // Random_Seed
+            // 
+            this.Random_Seed.Name = "Random_Seed";
+            this.Random_Seed.Size = new System.Drawing.Size(226, 34);
+            this.Random_Seed.Text = "Seed Random";
+            this.Random_Seed.Click += new System.EventHandler(this.Random_Seed_Click);
             // 
             // toolStrip1
             // 
@@ -409,8 +415,8 @@ namespace GameOfLife_Two
             // toolStripStatusLabelGenerations
             // 
             this.toolStripStatusLabelGenerations.Name = "toolStripStatusLabelGenerations";
-            this.toolStripStatusLabelGenerations.Size = new System.Drawing.Size(138, 25);
-            this.toolStripStatusLabelGenerations.Text = "Generations = 0";
+            this.toolStripStatusLabelGenerations.Size = new System.Drawing.Size(201, 25);
+            this.toolStripStatusLabelGenerations.Text = "Current Generations = 0";
             // 
             // graphicsPanel1
             // 
@@ -424,13 +430,6 @@ namespace GameOfLife_Two
             this.graphicsPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel1_Paint);
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
             // 
-            // Random_Seed
-            // 
-            this.Random_Seed.Name = "Random_Seed";
-            this.Random_Seed.Size = new System.Drawing.Size(270, 34);
-            this.Random_Seed.Text = "Seed Random";
-            this.Random_Seed.Click += new System.EventHandler(this.Random_Seed_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -443,7 +442,7 @@ namespace GameOfLife_Two
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Game Of Life";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
