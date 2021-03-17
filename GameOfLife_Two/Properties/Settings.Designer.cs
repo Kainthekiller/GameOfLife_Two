@@ -34,5 +34,17 @@ namespace GameOfLife_Two.Properties {
                 this["BackGroundColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int Timer {
+            get {
+                return ((int)(this["Timer"]));
+            }
+            set {
+                this["Timer"] = value;
+            }
+        }
     }
 }

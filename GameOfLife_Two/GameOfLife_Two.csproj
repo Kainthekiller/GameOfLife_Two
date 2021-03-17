@@ -55,6 +55,12 @@
     <Compile Include="Game_Of_LIfe_Main.Designer.cs">
       <DependentUpon>Game_Of_LIfe_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="MilliSecondsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MilliSecondsDialog.Designer.cs">
+      <DependentUpon>MilliSecondsDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="RandomSeedDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     </Compile>
     <EmbeddedResource Include="Game_Of_LIfe_Main.resx">
       <DependentUpon>Game_Of_LIfe_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MilliSecondsDialog.resx">
+      <DependentUpon>MilliSecondsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RandomSeedDialog.resx">
       <DependentUpon>RandomSeedDialog.cs</DependentUpon>

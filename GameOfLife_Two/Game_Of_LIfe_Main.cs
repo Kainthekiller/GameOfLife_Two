@@ -11,8 +11,8 @@ using static System.Net.Mime.MediaTypeNames;
 
 //TODO: Saving Current Universe
 //TODO: Opening a previously saved universe
-//TODO: Show Number of Liveing Cells *Status Strip
-//TODO: Control Milliseconds between each new generation Option
+//Show Number of Liveing Cells *Status Strip *Completed
+//Control Milliseconds between each new generation Option *Completed
 //TODO: Control The current size of the universe
 //TODO: VIEW MENU ITEMS TOGGLE GRIDS ON and OFF
 //TODO: VIEW MENU ITEMS TOGGLE neighbor count
@@ -25,10 +25,10 @@ namespace GameOfLife_Two
 {
     public partial class Game_Of_LIfe_Main : Form
     {
-        
+        int LivingCells = 0;
         // The universe array   //x = accross //y = down    
-        bool[,] universe = new bool[100, 100];
-        bool[,] scratchPad = new bool[100, 100];
+        bool[,] universe = new bool[30, 30];
+        bool[,] scratchPad = new bool[30, 30];
         // Drawing colors
         Color gridColor = Color.Black; // Lines color for grids
         Color cellColor = Color.DarkGray; // Background of cell when its alive
@@ -46,40 +46,47 @@ namespace GameOfLife_Two
 
 
             //Read Settings ******* Read Settings
-            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
-
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor; // Background color loaded from settings
+            timer.Interval = Properties.Settings.Default.Timer;  // milliseconds loaded from settings
 
             // Setup the timer
-            timer.Interval = 100; // milliseconds
             timer.Tick += Timer_Tick;
             timer.Enabled = false; // start timer running
         }
 
 
 
+        //______________________________________________________________________________________________________________________________________________________________
 
+                                            //NEXT GENERATION METHOD()
 
-        //WORK SITE !!!
-
-
+        //______________________________________________________________________________________________________________________________________________________________
 
 
 
         // Calculate the next generation of cells
         private void NextGeneration()
         {
-
+           
             // Increment generation count
             generations++;
 
-            // Update status strip generations
-            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString();
+            // Update status strip generations While *PLAY IS ACTIATED
+        
+            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString() + " Cells Alive " + LivingCells.ToString();
+            LivingCells = 0;
             for (int y = 0; y < universe.GetLength(1); y++)
             {
                 // Iterate through the universe in the x, left to right
                 //MAIN IF STATMENT LOCATION WHERE ALL MAGIC HAPPENS !!!
                 for (int x = 0; x < universe.GetLength(0); x++)
                 {
+                    if (universe[x, y])
+                    {
+                      
+                        LivingCells++;
+
+                    }
                     if (universe[x, y])
                     {
                         if ((CountNeighborsFinite(x, y) == 2) || (CountNeighborsFinite(x, y) == 3))
@@ -105,8 +112,10 @@ namespace GameOfLife_Two
                             scratchPad[x, y] = false;
                         }
                     }
+                 
                 }
             }
+            
             //Swap
             bool[,] temp = universe;
             universe = scratchPad;
@@ -120,27 +129,13 @@ namespace GameOfLife_Two
 
 
 
+        //______________________________________________________________________________________________________________________________________________________________
 
 
+                                                             //TIMER >>>>> GRAPHIC PANEL  >>>>>>> MOUSE CLICK
 
-
-
-
-
-        //WORK SITE !!!!
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                                        
+        //______________________________________________________________________________________________________________________________________________________________
 
 
 
@@ -234,26 +229,14 @@ namespace GameOfLife_Two
 
 
 
+        //______________________________________________________________________________________________________________________________________________________________
 
 
+                                    // Count Neighbors Methods()  >>>>>>> FINITE***COMPLETED***  >>>>>>> TOROIDAL ***NOT COMPLETED*** AKA MR INFINANTY
 
+        //______________________________________________________________________________________________________________________________________________________________
 
-
-
-
-
-
-
-
-
-
-
-
-        // COUNT NEXT DOOR PEEPS !!!!!!!!!!
-
-
-
-        //Counts Neighbors Alive FINITE !!!! //Easy Milestone *Complete
+        //Counts Neighbors Alive FINITE !!!! //Milestone *Complete
         private int CountNeighborsFinite(int x, int y)
         {
             int count = 0;
@@ -361,16 +344,17 @@ namespace GameOfLife_Two
 
 
 
+        //______________________________________________________________________________________________________________________________________________________________
 
 
 
-
-        //BUTTONS !!!!!!!!!!!!!
-
+                                    //BUTTONS ********************** BUTTONS ************************ BUTTONS
 
 
+        //______________________________________________________________________________________________________________________________________________________________
 
-        
+
+
         //New Game Button clicked resets all *Complete
         private void NewClicked(object sender, EventArgs e)
         {
@@ -385,8 +369,9 @@ namespace GameOfLife_Two
                 }
             }
             generations = 0;
-            //updates status strip Generations;
-            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString();
+            LivingCells = 0;
+            //updates status strip Generations; *NEW CLICKED*
+            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString() + " Cells Alive " + LivingCells.ToString();
             graphicsPanel1.Invalidate();
 
 
@@ -396,7 +381,6 @@ namespace GameOfLife_Two
         //Start Game of life by pressing start button *Complete
         private void StartBTN_Click(object sender, EventArgs e)
         {
-            timer.Interval = 100;
             timer.Enabled = true;
             NextBTN.Enabled = false;
             graphicsPanel1.Invalidate();
@@ -454,6 +438,7 @@ namespace GameOfLife_Two
         //Seed Randomizer *Completed *Crash Proof
         public void Random_Seed_Click(object sender, EventArgs e)
         {
+            timer.Enabled = false;
             RandomSeedDialog dlg = new RandomSeedDialog();
             if (DialogResult.OK == dlg.ShowDialog())
             {
@@ -472,7 +457,7 @@ namespace GameOfLife_Two
                     }
                 }
             }
-       
+            timer.Enabled = true;
         }
 
         private void BackGround_Color_BTN_Click(object sender, EventArgs e)
@@ -491,8 +476,9 @@ namespace GameOfLife_Two
         //Overall Form Closes and this code is executed *Holds Settings*
         private void Game_Of_LIfe_Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //Saves Settings for Background Color
+            //Saves Settings if Form is Closed
             Properties.Settings.Default.BackGroundColor = graphicsPanel1.BackColor;
+            Properties.Settings.Default.Timer = timer.Interval;
             Properties.Settings.Default.Save();
         }
         
@@ -510,6 +496,22 @@ namespace GameOfLife_Two
             Properties.Settings.Default.Reload();
             //Read Setting Agian after Reload
             graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+        }
+
+        //Adjust MillSec speed BTN
+        private void milliseconds_BTN_Click(object sender, EventArgs e)
+        {
+            timer.Enabled = false;
+            MilliSecondsDialog dlg = new MilliSecondsDialog();
+
+            if(DialogResult.OK == dlg.ShowDialog())
+            {
+                timer.Interval = (int)dlg.timerMillSec;
+            }
+            //Saves Current Timer Interval
+            Properties.Settings.Default.Timer = timer.Interval;
+            Properties.Settings.Default.Save();
+            timer.Enabled = true;
         }
     }
 }

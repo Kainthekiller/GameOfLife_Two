@@ -55,17 +55,11 @@ namespace GameOfLife_Two
             this.Random_Seed = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BackGround_Color_BTN = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.cellColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.gridColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.gridX10ColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.optionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.Reset_BTN = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.Reload_BTN = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -85,6 +79,9 @@ namespace GameOfLife_Two
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelGenerations = new System.Windows.Forms.ToolStripStatusLabel();
             this.graphicsPanel1 = new GameOfLife_Two.GraphicsPanel();
+            this.milliseconds_BTN = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -272,18 +269,15 @@ namespace GameOfLife_Two
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BackGround_Color_BTN,
-            this.toolStripSeparator3,
             this.cellColorToolStripMenuItem,
-            this.toolStripSeparator4,
             this.gridColorToolStripMenuItem,
-            this.toolStripSeparator8,
             this.gridX10ColorToolStripMenuItem,
-            this.toolStripSeparator9,
             this.optionsToolStripMenuItem1,
-            this.toolStripSeparator10,
+            this.toolStripSeparator9,
             this.Reset_BTN,
-            this.toolStripSeparator11,
-            this.Reload_BTN});
+            this.Reload_BTN,
+            this.toolStripSeparator15,
+            this.milliseconds_BTN});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.settingsToolStripMenuItem.Text = "Settings";
@@ -295,21 +289,11 @@ namespace GameOfLife_Two
             this.BackGround_Color_BTN.Text = "&BackGround Color";
             this.BackGround_Color_BTN.Click += new System.EventHandler(this.BackGround_Color_BTN_Click);
             // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(267, 6);
-            // 
             // cellColorToolStripMenuItem
             // 
             this.cellColorToolStripMenuItem.Name = "cellColorToolStripMenuItem";
             this.cellColorToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.cellColorToolStripMenuItem.Text = "&Cell Color";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(267, 6);
             // 
             // gridColorToolStripMenuItem
             // 
@@ -317,21 +301,11 @@ namespace GameOfLife_Two
             this.gridColorToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.gridColorToolStripMenuItem.Text = "Grid Color";
             // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(267, 6);
-            // 
             // gridX10ColorToolStripMenuItem
             // 
             this.gridX10ColorToolStripMenuItem.Name = "gridX10ColorToolStripMenuItem";
             this.gridX10ColorToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.gridX10ColorToolStripMenuItem.Text = "&Grid x10 Color";
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(267, 6);
             // 
             // optionsToolStripMenuItem1
             // 
@@ -339,22 +313,12 @@ namespace GameOfLife_Two
             this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
             this.optionsToolStripMenuItem1.Text = "Options";
             // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(267, 6);
-            // 
             // Reset_BTN
             // 
             this.Reset_BTN.Name = "Reset_BTN";
             this.Reset_BTN.Size = new System.Drawing.Size(270, 34);
             this.Reset_BTN.Text = "Reset";
             this.Reset_BTN.Click += new System.EventHandler(this.Reset_BTN_Click);
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(267, 6);
             // 
             // Reload_BTN
             // 
@@ -525,8 +489,8 @@ namespace GameOfLife_Two
             // toolStripStatusLabelGenerations
             // 
             this.toolStripStatusLabelGenerations.Name = "toolStripStatusLabelGenerations";
-            this.toolStripStatusLabelGenerations.Size = new System.Drawing.Size(201, 25);
-            this.toolStripStatusLabelGenerations.Text = "Current Generations = 0";
+            this.toolStripStatusLabelGenerations.Size = new System.Drawing.Size(305, 25);
+            this.toolStripStatusLabelGenerations.Text = "Current Generations = 0 Cells Alive 0 ";
             // 
             // graphicsPanel1
             // 
@@ -539,6 +503,23 @@ namespace GameOfLife_Two
             this.graphicsPanel1.TabIndex = 3;
             this.graphicsPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel1_Paint);
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
+            // 
+            // milliseconds_BTN
+            // 
+            this.milliseconds_BTN.Name = "milliseconds_BTN";
+            this.milliseconds_BTN.Size = new System.Drawing.Size(270, 34);
+            this.milliseconds_BTN.Text = "Milli&Seconds";
+            this.milliseconds_BTN.Click += new System.EventHandler(this.milliseconds_BTN_Click);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(267, 6);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(267, 6);
             // 
             // Game_Of_LIfe_Main
             // 
@@ -613,15 +594,12 @@ namespace GameOfLife_Two
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem Reset_BTN;
         private System.Windows.Forms.ToolStripMenuItem Reload_BTN;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.ToolStripMenuItem milliseconds_BTN;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
     }
 }
 
