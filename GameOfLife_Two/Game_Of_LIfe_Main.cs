@@ -11,11 +11,11 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 
 //Saving Current Universe *Complete currentrow.cell desktop or Save as 
-//TODO: Opening a previously saved universe **Half Way 
-//Show Number of Liveing Cells *Status Strip *Completed
+//Opening a previously saved universe *Completed
+//wShow Number of Liveing Cells *Status Strip *Completed
 //Control Milliseconds between each new generation Option *Completed
 //Control The current size of the universe *Completed
-//TODO: VIEW MENU ITEMS TOGGLE GRIDS ON and OFF
+//VIEW MENU ITEMS TOGGLE GRIDS ON and OFF *Completed
 //TODO: VIEW MENU ITEMS TOGGLE neighbor count
 //TODO: Advance Features time to check back on to FSU 
 
@@ -31,7 +31,7 @@ namespace GameOfLife_Two
         bool[,] universe = new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
         bool[,] scratchPad = new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
         // Drawing colors
-        Color gridColor = Color.Black; // Lines color for grids
+        Color gridColor = Properties.Settings.Default.GridColor; // Lines color for grids
         Color cellColor = Color.DarkGray; // Background of cell when its alive
         Color numberColor = Color.Green; // Changes Number Color
         // The Timer class
@@ -356,28 +356,14 @@ namespace GameOfLife_Two
 
 
         //New Game Button clicked resets all *Complete
-        private void NewClicked(object sender, EventArgs e)
+        private void New_BTN_Click(object sender, EventArgs e)
         {
-
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
-                // Iterate through the universe in the x, left to right
-                for (int x = 0; x < universe.GetLength(0); x++)
-                {
-                    universe[x, y] = false;
-                    scratchPad[x, y] = false;
-                }
-            }
-            generations = 0;
-            LivingCells = 0;
-            //updates status strip Generations; *NEW CLICKED*
-            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString() + " Cells Alive " + LivingCells.ToString();
-            graphicsPanel1.Invalidate();
-
-
+            newBtn();
         }
-
-
+        private void New_BTN_ToolStrip_Click(object sender, EventArgs e)
+        {
+            newBtn();
+        }
         //Start Game of life by pressing start button *Complete
         private void StartBTN_Click(object sender, EventArgs e)
         {
@@ -460,6 +446,22 @@ namespace GameOfLife_Two
             }
         }
 
+        //Change Grid Color Logic *Completed
+        private void GridColor_BTN_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = gridColor;
+
+            if(DialogResult.OK == dlg.ShowDialog())
+            {
+                gridColor = dlg.Color;
+            }
+
+            graphicsPanel1.Invalidate();
+        }
+
+        //Background Color Logic *Completed
         private void BackGround_Color_BTN_Click(object sender, EventArgs e)
         {
             ColorDialog dlg = new ColorDialog();
@@ -471,6 +473,7 @@ namespace GameOfLife_Two
                 graphicsPanel1.BackColor = dlg.Color;
 
             }
+            graphicsPanel1.Invalidate();
         }
 
         //Overall Form Closes and this code is executed *Holds Settings*
@@ -481,6 +484,7 @@ namespace GameOfLife_Two
             Properties.Settings.Default.Timer = timer.Interval;
             Properties.Settings.Default.height = universe.GetLength(0);
             Properties.Settings.Default.width = universe.GetLength(1);
+            Properties.Settings.Default.GridColor = gridColor;
             Properties.Settings.Default.Save();
         }
 
@@ -570,137 +574,82 @@ namespace GameOfLife_Two
         //Save btn gives a default filename currentrow.cell and saves it to the desktop. *Complete
         private void Save_BTN_Click(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string filepath = path + "\\currentrow.cells";
-
-            //Delete if the default Path Exist keeps things clean in my view alawys just make a new file from scratch
-            if (File.Exists(filepath))
-            {
-                File.Delete(filepath);
-            }
-
-            //Save *Makes a default file on the desktop*
-            if (!File.Exists(filepath))
-            {
-                StreamWriter writer = new StreamWriter(filepath);
-
-                // Write any comments you want to include first.
-                // Prefix all comment strings with an exclamation point.
-                // Use WriteLine to write the strings to the file. 
-                // It appends a CRLF for you.
-
-
-                // Iterate through the universe one row at a time.
-                for (int y = 0; y < universe.GetLength(1); y++)
-                {
-                    // Create a string to represent the current row.
-                    System.Text.StringBuilder currentRow = new System.Text.StringBuilder();
-
-                    // Iterate through the current row one cell at a time.
-                    for (int x = 0; x < universe.GetLength(0); x++)
-                    {
-                        // If the universe[x,y] is alive then append 'O' (capital O)
-
-                        if (universe[x, y])
-                        {
-                            currentRow.Append("O");
-                            // If true append capital O
-                        }
-                        // to the row string.
-                        else if (!universe[x, y])
-                        {
-                            currentRow.Append(".");
-                        }
-                        // Else if the universe[x,y] is dead then append '.' (period)
-                        // to the row string.
-                    }
-
-                    writer.WriteLine(currentRow);
-                    // Once the current row has been read through and the 
-                    // string constructed then write it to the file using WriteLine.
-                }
-                // After all rows and columns have been written then close the file.
-                writer.Close();
-
-                //default message and buttons
-                string message = "Your file has been saved to the Desktop as currentrow.cell";
-                string caption = "File Saved currentrow.cell";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-
-
-                //MessageBox to let user know the file has been saved onto the desktop
-                var result = MessageBox.Show(message, caption, buttons);
-            }
-
+            saveBtn();
         }
 
         //Save BTN on tool strip saves default currentrow.cell onto the desktop *Complete
         private void save_ToolStrip_BTN_Click(object sender, EventArgs e)
         {
-            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string filepath = path + "\\currentrow.cells";
-
-            //Delete if the default Path Exist keeps things clean in my view alawys just make a new file from scratch
-            if (File.Exists(filepath))
-            {
-                File.Delete(filepath);
-            }
-
-            //Save *Makes a default file on the desktop*
-            if (!File.Exists(filepath))
-            {
-                StreamWriter writer = new StreamWriter(filepath);
-
-                // Write any comments you want to include first.
-                // Prefix all comment strings with an exclamation point.
-                // Use WriteLine to write the strings to the file. 
-                // It appends a CRLF for you.
-
-
-                // Iterate through the universe one row at a time.
-                for (int y = 0; y < universe.GetLength(1); y++)
-                {
-                    // Create a string to represent the current row.
-                    System.Text.StringBuilder currentRow = new System.Text.StringBuilder();
-
-                    // Iterate through the current row one cell at a time.
-                    for (int x = 0; x < universe.GetLength(0); x++)
-                    {
-                        // If the universe[x,y] is alive then append 'O' (capital O)
-
-                        if (universe[x, y])
-                        {
-                            currentRow.Append("O");
-                            // If true append capital O
-                        }
-                        // to the row string.
-                        else if (!universe[x, y])
-                        {
-                            currentRow.Append(".");
-                        }
-                        // Else if the universe[x,y] is dead then append '.' (period)
-                        // to the row string.
-                    }
-
-                    writer.WriteLine(currentRow);
-                    // Once the current row has been read through and the 
-                    // string constructed then write it to the file using WriteLine.
-                }
-                // After all rows and columns have been written then close the file.
-                writer.Close();
-
-                //default message and buttons
-                string message = "Your file has been saved to the Desktop as currentrow.cell";
-                string caption = "File Saved currentrow.cell";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-
-
-                //MessageBox to let user know the file has been saved onto the desktop
-                var result = MessageBox.Show(message, caption, buttons);
-            }
+            saveBtn();
         }
 
+        //*Completed Open Files
         private void open_BTN_Click(object sender, EventArgs e)
+        {
+            openBtn();
+        }
+
+        //*Completed Open Files
+        private void Open_BTN_ToolStrip_Click(object sender, EventArgs e)
+        {
+            openBtn();
+        }
+
+
+        //SIZE BTN Changes the size of the grid Examples Universe[30,30]; *Complete
+        private void SizeofArea_BTN_Click(object sender, EventArgs e)
+        {
+            timer.Enabled = false;
+            SizeOfAreaDialog dlg = new SizeOfAreaDialog();
+            if(DialogResult.OK == dlg.ShowDialog())
+            {
+                universe = new bool[(int)dlg.width, (int)dlg.height];
+                scratchPad = new bool[(int)dlg.width, (int)dlg.height];
+                graphicsPanel1.Invalidate();
+            }
+            Properties.Settings.Default.height = universe.GetLength(0);
+            Properties.Settings.Default.width = universe.GetLength(1);
+            Properties.Settings.Default.Save();
+        }
+
+        //Turns Grid On and Off Stops *Completed
+        private void GridOnOff_CheckedChanged(object sender, EventArgs e)
+        {
+            if (GridOnOff.Checked)
+            {
+                Properties.Settings.Default.GridColor = gridColor;
+                gridColor = Color.Empty;
+                GridColor_BTN.Enabled = false;
+            }
+            else
+            {
+                GridColor_BTN.Enabled = true;
+                gridColor = Properties.Settings.Default.GridColor;
+                Properties.Settings.Default.Save();
+            }
+
+
+            graphicsPanel1.Invalidate();
+        }
+
+
+
+
+
+
+
+        //______________________________________________________________________________________________________________________________________________________________
+
+
+
+        //METHODS ********************** METHODS ************************ METHODS
+
+
+        //______________________________________________________________________________________________________________________________________________________________
+
+
+        //Open Button Method for Reuse if wanted
+        private void openBtn()
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "All Files|*.*|Cells|*.cells";
@@ -724,7 +673,7 @@ namespace GameOfLife_Two
                     // If the row begins with '!' then it is a comment
                     // and should be ignored.
                     if (row.StartsWith("!"))
-                    {
+                    {    
                         //Nothing needs to happen
                     }
 
@@ -738,60 +687,159 @@ namespace GameOfLife_Two
                     // Get the length of the current row string
                     int currentRowLength = row.Length;
                     // and adjust the maxWidth variable if necessary.
-                    if(maxWidth != currentRowLength)
+                    if (maxWidth != currentRowLength && !row.StartsWith("!"))
                     {
                         maxWidth = currentRowLength;
                     }
                 }
-                //*Continue back here
+
                 // Resize the current universe and scratchPad
                 // to the width and height of the file calculated above.
+                universe = new bool[maxWidth, maxHeight];
+                scratchPad = new bool[maxWidth, maxHeight];
+
+
 
                 // Reset the file pointer back to the beginning of the file.
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
 
                 // Iterate through the file again, this time reading in the cells.
+                int nextRow = -1;
                 while (!reader.EndOfStream)
                 {
                     // Read one row at a time.
                     string row = reader.ReadLine();
+                    //As line is read next row ++ to make for good irtration to the next row as its one line at a time. 
 
                     // If the row begins with '!' then
                     // it is a comment and should be ignored.
-
+                    if (row.StartsWith("!"))
+                    {
+                        //Nothing needs to happen
+                    }
                     // If the row is not a comment then 
                     // it is a row of cells and needs to be iterated through.
-                    for (int xPos = 0; xPos < row.Length; xPos++)
+                    else if (!row.StartsWith("!"))
                     {
-                        // If row[xPos] is a 'O' (capital O) then
-                        // set the corresponding cell in the universe to alive.
+                        nextRow++;
 
-                        // If row[xPos] is a '.' (period) then
-                        // set the corresponding cell in the universe to dead.
+
+                        for (int xPos = 0; xPos < row.Length; xPos++)
+                        {
+
+
+
+
+                            // If row[xPos] is a 'O' (capital O) then
+                            // set the corresponding cell in the universe to alive.
+                            if (row[xPos] == 'O')
+                            {
+
+                                universe[xPos, nextRow] = true;
+
+                            }
+
+                            //If row[xPos] is a '.' (period) then
+                            //set the corresponding cell in the universe to dead.
+                            if (row[xPos] == '.')
+                            {
+                                universe[xPos, nextRow] = false;
+                            }
+                        }
+
+                        graphicsPanel1.Invalidate();
                     }
                 }
 
                 // Close the file.
                 reader.Close();
             }
-
         }
-
-        //SIZE BTN Changes the size of the grid Examples Universe[30,30]; *Complete
-        private void SizeofArea_BTN_Click(object sender, EventArgs e)
+        //Save Button Method / Default Method
+        private void saveBtn()
         {
-            timer.Enabled = false;
-            SizeOfAreaDialog dlg = new SizeOfAreaDialog();
-            if(DialogResult.OK == dlg.ShowDialog())
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string filepath = path + "\\currentrow.cells";
+
+            //Delete if the default Path Exist keeps things clean in my view alawys just make a new file from scratch
+            if (File.Exists(filepath))
             {
-                universe = new bool[(int)dlg.width, (int)dlg.height];
-                scratchPad = new bool[(int)dlg.width, (int)dlg.height];
-                graphicsPanel1.Invalidate();
+                File.Delete(filepath);
             }
-            Properties.Settings.Default.height = universe.GetLength(0);
-            Properties.Settings.Default.width = universe.GetLength(1);
-            Properties.Settings.Default.Save();
+
+            //Save *Makes a default file on the desktop*
+            if (!File.Exists(filepath))
+            {
+                StreamWriter writer = new StreamWriter(filepath);
+
+                // Write any comments you want to include first.
+                // Prefix all comment strings with an exclamation point.
+                // Use WriteLine to write the strings to the file. 
+                // It appends a CRLF for you.
+
+
+                // Iterate through the universe one row at a time.
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    // Create a string to represent the current row.
+                    System.Text.StringBuilder currentRow = new System.Text.StringBuilder();
+
+                    // Iterate through the current row one cell at a time.
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+                        // If the universe[x,y] is alive then append 'O' (capital O)
+
+                        if (universe[x, y])
+                        {
+                            currentRow.Append("O");
+                            // If true append capital O
+                        }
+                        // to the row string.
+                        else if (!universe[x, y])
+                        {
+                            currentRow.Append(".");
+                        }
+                        // Else if the universe[x,y] is dead then append '.' (period)
+                        // to the row string.
+                    }
+
+                    writer.WriteLine(currentRow);
+                    // Once the current row has been read through and the 
+                    // string constructed then write it to the file using WriteLine.
+                }
+                // After all rows and columns have been written then close the file.
+                writer.Close();
+
+                //default message and buttons
+                string message = "Your file has been saved to the Desktop as currentrow.cell";
+                string caption = "File Saved currentrow.cell";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+
+
+                //MessageBox to let user know the file has been saved onto the desktop
+                var result = MessageBox.Show(message, caption, buttons);
+            }
         }
+        //New Button Method 
+        private void newBtn()
+        {
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+                // Iterate through the universe in the x, left to right
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+                    universe[x, y] = false;
+                    scratchPad[x, y] = false;
+                }
+            }
+            generations = 0;
+            LivingCells = 0;
+            //updates status strip Generations; *NEW CLICKED*
+            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString() + " Cells Alive " + LivingCells.ToString();
+            graphicsPanel1.Invalidate();
+
+        }
+
     }
 }
 
