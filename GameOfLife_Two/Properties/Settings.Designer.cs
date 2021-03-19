@@ -46,5 +46,29 @@ namespace GameOfLife_Two.Properties {
                 this["Timer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int height {
+            get {
+                return ((int)(this["height"]));
+            }
+            set {
+                this["height"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int width {
+            get {
+                return ((int)(this["width"]));
+            }
+            set {
+                this["width"] = value;
+            }
+        }
     }
 }

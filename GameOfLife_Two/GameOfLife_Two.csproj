@@ -72,11 +72,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WindowFormCurrent.cs">
+    <Compile Include="SizeOfAreaDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowFormCurrent.Designer.cs">
-      <DependentUpon>WindowFormCurrent.cs</DependentUpon>
+    <Compile Include="SizeOfAreaDialog.Designer.cs">
+      <DependentUpon>SizeOfAreaDialog.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Game_Of_LIfe_Main.resx">
       <DependentUpon>Game_Of_LIfe_Main.cs</DependentUpon>
@@ -97,6 +97,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SizeOfAreaDialog.resx">
+      <DependentUpon>SizeOfAreaDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
