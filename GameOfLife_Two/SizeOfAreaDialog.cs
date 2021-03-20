@@ -16,7 +16,7 @@ namespace GameOfLife_Two
         {
             InitializeComponent();
         }
-
+        
         public decimal height
         {
             get

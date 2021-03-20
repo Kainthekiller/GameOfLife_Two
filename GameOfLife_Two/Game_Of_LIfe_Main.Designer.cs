@@ -55,9 +55,8 @@ namespace GameOfLife_Two
             this.Random_Seed = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BackGround_Color_BTN = new System.Windows.Forms.ToolStripMenuItem();
-            this.cellColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CellColor_BTN = new System.Windows.Forms.ToolStripMenuItem();
             this.GridColor_BTN = new System.Windows.Forms.ToolStripMenuItem();
-            this.gridX10ColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.Reset_BTN = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +82,7 @@ namespace GameOfLife_Two
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelGenerations = new System.Windows.Forms.ToolStripStatusLabel();
             this.GridOnOff = new System.Windows.Forms.CheckBox();
+            this.neighborOnOff_CheckBox = new System.Windows.Forms.CheckBox();
             this.graphicsPanel1 = new GameOfLife_Two.GraphicsPanel();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -102,7 +102,7 @@ namespace GameOfLife_Two
             this.SizeofArea_BTN});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2253, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(2253, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -118,7 +118,7 @@ namespace GameOfLife_Two
             this.toolStripSeparator2,
             this.ExitBTN});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 30);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // New_BTN
@@ -186,7 +186,7 @@ namespace GameOfLife_Two
             this.customizeToolStripMenuItem,
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(69, 30);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // customizeToolStripMenuItem
@@ -210,7 +210,7 @@ namespace GameOfLife_Two
             this.toolStripSeparator5,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 30);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // contentsToolStripMenuItem
@@ -249,7 +249,7 @@ namespace GameOfLife_Two
             this.toolStripSeparator12,
             this.Random_Seed});
             this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
-            this.randomToolStripMenuItem.Size = new System.Drawing.Size(123, 30);
+            this.randomToolStripMenuItem.Size = new System.Drawing.Size(123, 29);
             this.randomToolStripMenuItem.Text = "Randomizer";
             // 
             // RandomNoSeed
@@ -275,9 +275,8 @@ namespace GameOfLife_Two
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.BackGround_Color_BTN,
-            this.cellColorToolStripMenuItem,
+            this.CellColor_BTN,
             this.GridColor_BTN,
-            this.gridX10ColorToolStripMenuItem,
             this.optionsToolStripMenuItem1,
             this.toolStripSeparator9,
             this.Reset_BTN,
@@ -285,7 +284,7 @@ namespace GameOfLife_Two
             this.toolStripSeparator15,
             this.milliseconds_BTN});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(92, 30);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // BackGround_Color_BTN
@@ -295,11 +294,12 @@ namespace GameOfLife_Two
             this.BackGround_Color_BTN.Text = "&BackGround Color";
             this.BackGround_Color_BTN.Click += new System.EventHandler(this.BackGround_Color_BTN_Click);
             // 
-            // cellColorToolStripMenuItem
+            // CellColor_BTN
             // 
-            this.cellColorToolStripMenuItem.Name = "cellColorToolStripMenuItem";
-            this.cellColorToolStripMenuItem.Size = new System.Drawing.Size(258, 34);
-            this.cellColorToolStripMenuItem.Text = "&Cell Color";
+            this.CellColor_BTN.Name = "CellColor_BTN";
+            this.CellColor_BTN.Size = new System.Drawing.Size(258, 34);
+            this.CellColor_BTN.Text = "&Cell Color";
+            this.CellColor_BTN.Click += new System.EventHandler(this.CellColor_BTN_Click);
             // 
             // GridColor_BTN
             // 
@@ -307,12 +307,6 @@ namespace GameOfLife_Two
             this.GridColor_BTN.Size = new System.Drawing.Size(258, 34);
             this.GridColor_BTN.Text = "Grid Color";
             this.GridColor_BTN.Click += new System.EventHandler(this.GridColor_BTN_Click);
-            // 
-            // gridX10ColorToolStripMenuItem
-            // 
-            this.gridX10ColorToolStripMenuItem.Name = "gridX10ColorToolStripMenuItem";
-            this.gridX10ColorToolStripMenuItem.Size = new System.Drawing.Size(258, 34);
-            this.gridX10ColorToolStripMenuItem.Text = "&Grid x10 Color";
             // 
             // optionsToolStripMenuItem1
             // 
@@ -354,7 +348,7 @@ namespace GameOfLife_Two
             // SizeofArea_BTN
             // 
             this.SizeofArea_BTN.Name = "SizeofArea_BTN";
-            this.SizeofArea_BTN.Size = new System.Drawing.Size(122, 30);
+            this.SizeofArea_BTN.Size = new System.Drawing.Size(122, 29);
             this.SizeofArea_BTN.Text = "Size of Area";
             this.SizeofArea_BTN.Click += new System.EventHandler(this.SizeofArea_BTN_Click);
             // 
@@ -376,10 +370,10 @@ namespace GameOfLife_Two
             this.toolStripButton2,
             this.toolStripSeparator13,
             this.NextBTN});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 36);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 33);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(2253, 38);
+            this.toolStrip1.Size = new System.Drawing.Size(2253, 33);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.Click += new System.EventHandler(this.StopBTN_Click);
@@ -390,7 +384,7 @@ namespace GameOfLife_Two
             this.New_BTN_ToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("New_BTN_ToolStrip.Image")));
             this.New_BTN_ToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.New_BTN_ToolStrip.Name = "New_BTN_ToolStrip";
-            this.New_BTN_ToolStrip.Size = new System.Drawing.Size(34, 33);
+            this.New_BTN_ToolStrip.Size = new System.Drawing.Size(34, 28);
             this.New_BTN_ToolStrip.Text = "&New";
             this.New_BTN_ToolStrip.Click += new System.EventHandler(this.New_BTN_ToolStrip_Click);
             // 
@@ -400,7 +394,7 @@ namespace GameOfLife_Two
             this.Open_BTN_ToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("Open_BTN_ToolStrip.Image")));
             this.Open_BTN_ToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Open_BTN_ToolStrip.Name = "Open_BTN_ToolStrip";
-            this.Open_BTN_ToolStrip.Size = new System.Drawing.Size(34, 33);
+            this.Open_BTN_ToolStrip.Size = new System.Drawing.Size(34, 28);
             this.Open_BTN_ToolStrip.Text = "&Open";
             this.Open_BTN_ToolStrip.Click += new System.EventHandler(this.Open_BTN_ToolStrip_Click);
             // 
@@ -410,14 +404,14 @@ namespace GameOfLife_Two
             this.save_ToolStrip_BTN.Image = ((System.Drawing.Image)(resources.GetObject("save_ToolStrip_BTN.Image")));
             this.save_ToolStrip_BTN.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.save_ToolStrip_BTN.Name = "save_ToolStrip_BTN";
-            this.save_ToolStrip_BTN.Size = new System.Drawing.Size(34, 33);
+            this.save_ToolStrip_BTN.Size = new System.Drawing.Size(34, 28);
             this.save_ToolStrip_BTN.Text = "&Save";
             this.save_ToolStrip_BTN.Click += new System.EventHandler(this.save_ToolStrip_BTN_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 33);
             // 
             // cutToolStripButton
             // 
@@ -425,7 +419,7 @@ namespace GameOfLife_Two
             this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
             this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.cutToolStripButton.Name = "cutToolStripButton";
-            this.cutToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.cutToolStripButton.Size = new System.Drawing.Size(34, 28);
             this.cutToolStripButton.Text = "C&ut";
             // 
             // copyToolStripButton
@@ -434,7 +428,7 @@ namespace GameOfLife_Two
             this.copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
             this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.copyToolStripButton.Name = "copyToolStripButton";
-            this.copyToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.copyToolStripButton.Size = new System.Drawing.Size(34, 28);
             this.copyToolStripButton.Text = "&Copy";
             // 
             // pasteToolStripButton
@@ -443,13 +437,13 @@ namespace GameOfLife_Two
             this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
             this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.pasteToolStripButton.Name = "pasteToolStripButton";
-            this.pasteToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.pasteToolStripButton.Size = new System.Drawing.Size(34, 28);
             this.pasteToolStripButton.Text = "&Paste";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 33);
             // 
             // toolStripButton1
             // 
@@ -457,7 +451,7 @@ namespace GameOfLife_Two
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(34, 33);
+            this.toolStripButton1.Size = new System.Drawing.Size(34, 28);
             this.toolStripButton1.Text = "He&lp";
             // 
             // StartBTN
@@ -468,14 +462,14 @@ namespace GameOfLife_Two
             this.StartBTN.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.StartBTN.Name = "StartBTN";
             this.StartBTN.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
-            this.StartBTN.Size = new System.Drawing.Size(128, 33);
+            this.StartBTN.Size = new System.Drawing.Size(128, 28);
             this.StartBTN.Text = "Start";
             this.StartBTN.Click += new System.EventHandler(this.StartBTN_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(6, 33);
             // 
             // toolStripButton2
             // 
@@ -485,13 +479,13 @@ namespace GameOfLife_Two
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
-            this.toolStripButton2.Size = new System.Drawing.Size(128, 33);
+            this.toolStripButton2.Size = new System.Drawing.Size(128, 28);
             this.toolStripButton2.Text = "Pause";
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 33);
             // 
             // NextBTN
             // 
@@ -502,7 +496,7 @@ namespace GameOfLife_Two
             this.NextBTN.ImageTransparentColor = System.Drawing.Color.Gold;
             this.NextBTN.Name = "NextBTN";
             this.NextBTN.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
-            this.NextBTN.Size = new System.Drawing.Size(128, 33);
+            this.NextBTN.Size = new System.Drawing.Size(128, 28);
             this.NextBTN.Text = "Stop";
             this.NextBTN.ToolTipText = "Next";
             this.NextBTN.Click += new System.EventHandler(this.NextBTN_Click);
@@ -528,7 +522,7 @@ namespace GameOfLife_Two
             // GridOnOff
             // 
             this.GridOnOff.AutoSize = true;
-            this.GridOnOff.Location = new System.Drawing.Point(1364, 37);
+            this.GridOnOff.Location = new System.Drawing.Point(1217, 50);
             this.GridOnOff.Name = "GridOnOff";
             this.GridOnOff.Size = new System.Drawing.Size(91, 24);
             this.GridOnOff.TabIndex = 4;
@@ -536,14 +530,24 @@ namespace GameOfLife_Two
             this.GridOnOff.UseVisualStyleBackColor = true;
             this.GridOnOff.CheckedChanged += new System.EventHandler(this.GridOnOff_CheckedChanged);
             // 
+            // neighborOnOff_CheckBox
+            // 
+            this.neighborOnOff_CheckBox.AutoSize = true;
+            this.neighborOnOff_CheckBox.Location = new System.Drawing.Point(960, 50);
+            this.neighborOnOff_CheckBox.Name = "neighborOnOff_CheckBox";
+            this.neighborOnOff_CheckBox.Size = new System.Drawing.Size(163, 24);
+            this.neighborOnOff_CheckBox.TabIndex = 5;
+            this.neighborOnOff_CheckBox.Text = "Neighbor View Off";
+            this.neighborOnOff_CheckBox.UseVisualStyleBackColor = true;
+            // 
             // graphicsPanel1
             // 
             this.graphicsPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.graphicsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graphicsPanel1.Location = new System.Drawing.Point(0, 74);
+            this.graphicsPanel1.Location = new System.Drawing.Point(0, 66);
             this.graphicsPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.graphicsPanel1.Name = "graphicsPanel1";
-            this.graphicsPanel1.Size = new System.Drawing.Size(2253, 1212);
+            this.graphicsPanel1.Size = new System.Drawing.Size(2253, 1220);
             this.graphicsPanel1.TabIndex = 3;
             this.graphicsPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel1_Paint);
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
@@ -553,6 +557,7 @@ namespace GameOfLife_Two
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2253, 1318);
+            this.Controls.Add(this.neighborOnOff_CheckBox);
             this.Controls.Add(this.GridOnOff);
             this.Controls.Add(this.graphicsPanel1);
             this.Controls.Add(this.statusStrip1);
@@ -616,9 +621,8 @@ namespace GameOfLife_Two
         private System.Windows.Forms.ToolStripMenuItem Random_Seed;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem BackGround_Color_BTN;
-        private System.Windows.Forms.ToolStripMenuItem cellColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CellColor_BTN;
         private System.Windows.Forms.ToolStripMenuItem GridColor_BTN;
-        private System.Windows.Forms.ToolStripMenuItem gridX10ColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem Reset_BTN;
         private System.Windows.Forms.ToolStripMenuItem Reload_BTN;
@@ -630,6 +634,7 @@ namespace GameOfLife_Two
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem SizeofArea_BTN;
         private System.Windows.Forms.CheckBox GridOnOff;
+        private System.Windows.Forms.CheckBox neighborOnOff_CheckBox;
     }
 }
 

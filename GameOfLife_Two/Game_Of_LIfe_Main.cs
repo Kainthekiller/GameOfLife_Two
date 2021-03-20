@@ -16,7 +16,7 @@ using static System.Net.Mime.MediaTypeNames;
 //Control Milliseconds between each new generation Option *Completed
 //Control The current size of the universe *Completed
 //VIEW MENU ITEMS TOGGLE GRIDS ON and OFF *Completed
-//TODO: VIEW MENU ITEMS TOGGLE neighbor count
+//VIEW MENU ITEMS TOGGLE neighbor count *Completed 90 percent works
 //TODO: Advance Features time to check back on to FSU 
 
 
@@ -32,8 +32,9 @@ namespace GameOfLife_Two
         bool[,] scratchPad = new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
         // Drawing colors
         Color gridColor = Properties.Settings.Default.GridColor; // Lines color for grids
-        Color cellColor = Color.DarkGray; // Background of cell when its alive
+        Color cellColor = Properties.Settings.Default.CellColor; // Background of cell when its alive
         Color numberColor = Color.Green; // Changes Number Color
+        string nextDoor = string.Empty;
         // The Timer class
         Timer timer = new Timer();
 
@@ -186,22 +187,34 @@ namespace GameOfLife_Two
                         stringFormat.Alignment = StringAlignment.Center;
                         stringFormat.LineAlignment = StringAlignment.Center;
                         Rectangle rect = new Rectangle(0, 0, 100, 100);
-                        int neighbors = 8;
-                        neighbors = CountNeighborsFinite(x, y);
-                        e.Graphics.DrawString(neighbors.ToString(), font, Brushes.Black, cellRect, stringFormat); // Draws A in the middle of the boxes
 
+
+                        //If Checked neighbors are turned off by empty string, otherwise the numbers show;
+                        if (neighborOnOff_CheckBox.Checked)
+                        {
+                            //No Graphics
+                            
+                        }
+                        else
+                        {
+                            nextDoor = CountNeighborsFinite(x, y).ToString();
+                            e.Graphics.DrawString(nextDoor, font, Brushes.Black, cellRect, stringFormat);
+                        }
+                     
                     }
-
+               
                     // Outline the cell with a pen
                     e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
+                   
                 }
+               
             }
-
+         
             // Cleaning up pens and brushes
             gridPen.Dispose();
             cellBrush.Dispose();
         }
-
+   
 
         //Click true = false and false = true; Knows where you clicked *Not Complete
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
@@ -243,46 +256,48 @@ namespace GameOfLife_Two
             int xLen = universe.GetLength(0);
             int yLen = universe.GetLength(1);
 
-            for (int yOffset = -1; yOffset <= 1; yOffset++)
-            {
-                for (int xOffset = -1; xOffset <= 1; xOffset++)
+
+                for (int yOffset = -1; yOffset <= 1; yOffset++)
                 {
-                    int xCheck = x + xOffset;
-                    int yCheck = y + yOffset;
+                    for (int xOffset = -1; xOffset <= 1; xOffset++)
+                    {
+                        int xCheck = x + xOffset;
+                        int yCheck = y + yOffset;
 
-                    // if xOffset and yOffset are both equal to 0 then continue
-                    if (xOffset == 0 && yOffset == 0)
-                    {
-                        continue;
-                    }
-                    // if xCheck is less than 0 then continue
-                    if (xCheck < 0)
-                    {
-                        continue;
-                    }
-                    // if yCheck is less than 0 then continue
-                    if (yCheck < 0)
-                    {
-                        continue;
-                    }
-                    // if xCheck is greater than or equal too xLen then continue
-                    if (xCheck >= xLen)
-                    {
-                        continue;
-                    }
-                    // if yCheck is greater than or equal too yLen then continue
-                    if (yCheck >= yLen)
-                    {
-                        continue;
-                    }
-                    //Check if neighbor is a alive via true and adds to count checks 8 spots;
-                    if (universe[xCheck, yCheck] == true)
-                    {
-                        count++;
-                    }
+                        // if xOffset and yOffset are both equal to 0 then continue
+                        if (xOffset == 0 && yOffset == 0)
+                        {
+                            continue;
+                        }
+                        // if xCheck is less than 0 then continue
+                        if (xCheck < 0)
+                        {
+                            continue;
+                        }
+                        // if yCheck is less than 0 then continue
+                        if (yCheck < 0)
+                        {
+                            continue;
+                        }
+                        // if xCheck is greater than or equal too xLen then continue
+                        if (xCheck >= xLen)
+                        {
+                            continue;
+                        }
+                        // if yCheck is greater than or equal too yLen then continue
+                        if (yCheck >= yLen)
+                        {
+                            continue;
+                        }
+                        //Check if neighbor is a alive via true and adds to count checks 8 spots;
+                        if (universe[xCheck, yCheck] == true)
+                        {
+                            count++;
+                        }
 
+                    }
                 }
-            }
+            
             return count;
         }
 
@@ -295,48 +310,52 @@ namespace GameOfLife_Two
             int xLen = universe.GetLength(0);
             int yLen = universe.GetLength(1);
 
-            for (int yOffset = -1; yOffset < 2; yOffset++)
-            {
-                for (int xOffset = -1; xOffset < 2; xOffset++)
+       
+            
+                for (int yOffset = -1; yOffset < 2; yOffset++)
                 {
-                    int xCheck = x + xOffset;
-                    int yCheck = y + yOffset;
+                    for (int xOffset = -1; xOffset < 2; xOffset++)
+                    {
+                        int xCheck = x + xOffset;
+                        int yCheck = y + yOffset;
 
 
-                    // if xOffset and yOffset are both equal to 0 then continue
-                    if (xOffset == 0 && yOffset == 0)
-                    {
-                        continue;
-                    }
+                        // if xOffset and yOffset are both equal to 0 then continue
+                        if (xOffset == 0 && yOffset == 0)
+                        {
+                            continue;
+                        }
 
-                    // if xCheck is less than 0 then set to xLen - 1
-                    if (xCheck < 0)
-                    {
-                        xLen = -1;
-                    }
+                        // if xCheck is less than 0 then set to xLen - 1
+                        if (xCheck < 0)
+                        {
+                            xLen = -1;
+                        }
 
-                    // if yCheck is less than 0 then set to yLen - 1
-                    if (yCheck < 0)
-                    {
-                        yLen = -1;
-                    }
+                        // if yCheck is less than 0 then set to yLen - 1
+                        if (yCheck < 0)
+                        {
+                            yLen = -1;
+                        }
 
-                    // if xCheck is greater than or equal too xLen then set to 0
-                    if (xCheck >= xLen)
-                    {
-                        xCheck = 0;
-                    }
-                    // if yCheck is greater than or equal too yLen then set to 0
-                    if (yCheck >= yLen)
-                    {
-                        yCheck = 0;
-                    }
-                    if (universe[xCheck, yCheck] == true)
-                    {
-                        count++;
+                        // if xCheck is greater than or equal too xLen then set to 0
+                        if (xCheck >= xLen)
+                        {
+                            xCheck = 0;
+                        }
+                        // if yCheck is greater than or equal too yLen then set to 0
+                        if (yCheck >= yLen)
+                        {
+                            yCheck = 0;
+                        }
+                        if (universe[xCheck, yCheck] == true)
+                        {
+                            count++;
+                        }
                     }
                 }
-            }
+            
+       
             return count;
         }
 
@@ -485,6 +504,7 @@ namespace GameOfLife_Two
             Properties.Settings.Default.height = universe.GetLength(0);
             Properties.Settings.Default.width = universe.GetLength(1);
             Properties.Settings.Default.GridColor = gridColor;
+            Properties.Settings.Default.CellColor = cellColor;
             Properties.Settings.Default.Save();
         }
 
@@ -523,6 +543,7 @@ namespace GameOfLife_Two
         //Save As BTN lets to name and choose where to save the file *Complete
         private void SaveAs_BTN_Click(object sender, EventArgs e)
         {
+            timer.Enabled = false;
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "All Files|*.*|Cells|*.cells";
             dlg.FilterIndex = 2; dlg.DefaultExt = "cells";
@@ -568,6 +589,7 @@ namespace GameOfLife_Two
                 }
                 // After all rows and columns have been written then close the file.
                 writer.Close();
+                timer.Enabled = true;
             }
         }
 
@@ -628,11 +650,23 @@ namespace GameOfLife_Two
                 Properties.Settings.Default.Save();
             }
 
-
+            
             graphicsPanel1.Invalidate();
         }
+        
+        //Change Cell Colors *Completed
+        private void CellColor_BTN_Click(object sender, EventArgs e)
+        {
+            ColorDialog dlg = new ColorDialog();
+            dlg.Color = cellColor;
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                cellColor = dlg.Color;
+            }
 
+            graphicsPanel1.Invalidate();
 
+        }
 
 
 
@@ -758,6 +792,7 @@ namespace GameOfLife_Two
         //Save Button Method / Default Method
         private void saveBtn()
         {
+            timer.Enabled = false;
             string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string filepath = path + "\\currentrow.cells";
 
