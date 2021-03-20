@@ -12,13 +12,15 @@ using static System.Net.Mime.MediaTypeNames;
 
 //Saving Current Universe *Complete currentrow.cell desktop or Save as 
 //Opening a previously saved universe *Completed
-//wShow Number of Liveing Cells *Status Strip *Completed
+//Show Number of Liveing Cells *Status Strip *Completed
 //Control Milliseconds between each new generation Option *Completed
 //Control The current size of the universe *Completed
 //VIEW MENU ITEMS TOGGLE GRIDS ON and OFF *Completed
 //VIEW MENU ITEMS TOGGLE neighbor count *Completed 90 percent works
-//TODO: Advance Features time to check back on to FSU 
-
+//Infianty 
+//TODO: Context Sensitive Menu
+//TODO: HUD
+//TODO: Reload and Reset Work better prolly just needs little extra code. 
 
 
 
@@ -26,6 +28,7 @@ namespace GameOfLife_Two
 {
     public partial class Game_Of_LIfe_Main : Form
     {
+        bool finiteStatus = true;
         int LivingCells = 0;
         // The universe array   //x = accross //y = down    
         bool[,] universe = new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
@@ -71,10 +74,6 @@ namespace GameOfLife_Two
 
             // Increment generation count
             generations++;
-
-            // Update status strip generations While *PLAY IS ACTIATED
-
-            toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString() + " Cells Alive " + LivingCells.ToString();
             LivingCells = 0;
             for (int y = 0; y < universe.GetLength(1); y++)
             {
@@ -88,8 +87,9 @@ namespace GameOfLife_Two
                         LivingCells++;
 
                     }
-                    if (universe[x, y])
+                    if (universe[x, y] && finiteStatus == true)
                     {
+
                         if ((CountNeighborsFinite(x, y) == 2) || (CountNeighborsFinite(x, y) == 3))
                         {
                             scratchPad[x, y] = true;
@@ -100,7 +100,7 @@ namespace GameOfLife_Two
                             scratchPad[x, y] = false;
                         }
                     }
-                    else
+                    else if (!universe[x, y] && finiteStatus == true)
                     {
                         //Bring them back to life if 3 next door exist
                         if (CountNeighborsFinite(x, y) == 3)
@@ -113,8 +113,37 @@ namespace GameOfLife_Two
                             scratchPad[x, y] = false;
                         }
                     }
+                    if (universe[x, y] && finiteStatus == false)
+                    {
+
+                        if ((CountNeighborsToridal(x, y) == 2) || (CountNeighborsToridal(x, y) == 3))
+                        {
+                            scratchPad[x, y] = true;
+                        }
+
+                        if ((CountNeighborsToridal(x, y) < 2) || (CountNeighborsToridal(x, y) > 3))
+                        {
+                            scratchPad[x, y] = false;
+                        }
+                    }
+                    else if (!universe[x, y] && finiteStatus == false)
+                    {
+                        //Bring them back to life if 3 next door exist
+                        if (CountNeighborsToridal(x, y) == 3)
+                        {
+                            scratchPad[x, y] = true;
+                        }
+                        //Needed to ensure the dead stay dead
+                        else
+                        {
+                            scratchPad[x, y] = false;
+                        }
+                    }
 
                 }
+
+                // Update status strip generations While *Need to be after for loop to stay current. 
+                toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString() + " Cells Alive " + LivingCells.ToString();
             }
 
             //Swap
@@ -193,28 +222,36 @@ namespace GameOfLife_Two
                         if (neighborOnOff_CheckBox.Checked)
                         {
                             //No Graphics
-                            
+
                         }
                         else
                         {
-                            nextDoor = CountNeighborsFinite(x, y).ToString();
+                            if(finiteStatus == true)
+                            {
+                                nextDoor = CountNeighborsFinite(x, y).ToString();
+                            }
+                            else if (finiteStatus == false)
+                            {
+                                nextDoor = CountNeighborsToridal(x, y).ToString();
+                            }
+                           
                             e.Graphics.DrawString(nextDoor, font, Brushes.Black, cellRect, stringFormat);
                         }
-                     
+
                     }
-               
+
                     // Outline the cell with a pen
                     e.Graphics.DrawRectangle(gridPen, cellRect.X, cellRect.Y, cellRect.Width, cellRect.Height);
-                   
+
                 }
-               
+
             }
-         
+
             // Cleaning up pens and brushes
             gridPen.Dispose();
             cellBrush.Dispose();
         }
-   
+
 
         //Click true = false and false = true; Knows where you clicked *Not Complete
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
@@ -257,105 +294,105 @@ namespace GameOfLife_Two
             int yLen = universe.GetLength(1);
 
 
-                for (int yOffset = -1; yOffset <= 1; yOffset++)
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
-                    for (int xOffset = -1; xOffset <= 1; xOffset++)
+                    int xCheck = x + xOffset;
+                    int yCheck = y + yOffset;
+
+                    // if xOffset and yOffset are both equal to 0 then continue
+                    if (xOffset == 0 && yOffset == 0)
                     {
-                        int xCheck = x + xOffset;
-                        int yCheck = y + yOffset;
-
-                        // if xOffset and yOffset are both equal to 0 then continue
-                        if (xOffset == 0 && yOffset == 0)
-                        {
-                            continue;
-                        }
-                        // if xCheck is less than 0 then continue
-                        if (xCheck < 0)
-                        {
-                            continue;
-                        }
-                        // if yCheck is less than 0 then continue
-                        if (yCheck < 0)
-                        {
-                            continue;
-                        }
-                        // if xCheck is greater than or equal too xLen then continue
-                        if (xCheck >= xLen)
-                        {
-                            continue;
-                        }
-                        // if yCheck is greater than or equal too yLen then continue
-                        if (yCheck >= yLen)
-                        {
-                            continue;
-                        }
-                        //Check if neighbor is a alive via true and adds to count checks 8 spots;
-                        if (universe[xCheck, yCheck] == true)
-                        {
-                            count++;
-                        }
-
+                        continue;
                     }
+                    // if xCheck is less than 0 then continue
+                    if (xCheck < 0)
+                    {
+                        continue;
+                    }
+                    // if yCheck is less than 0 then continue
+                    if (yCheck < 0)
+                    {
+                        continue;
+                    }
+                    // if xCheck is greater than or equal too xLen then continue
+                    if (xCheck >= xLen)
+                    {
+                        continue;
+                    }
+                    // if yCheck is greater than or equal too yLen then continue
+                    if (yCheck >= yLen)
+                    {
+                        continue;
+                    }
+                    //Check if neighbor is a alive via true and adds to count checks 8 spots;
+                    if (universe[xCheck, yCheck] == true)
+                    {
+                        count++;
+                    }
+
                 }
-            
+            }
+
             return count;
         }
 
-
-
-        //Counts Neighbors Toroidal  *Not Complete
+        
+        
+        //Counts Neighbors Toroidal  *Complete
         private int CountNeighborsToridal(int x, int y)
         {
             int count = 0;
             int xLen = universe.GetLength(0);
             int yLen = universe.GetLength(1);
 
-       
-            
-                for (int yOffset = -1; yOffset < 2; yOffset++)
+
+
+            for (int yOffset = -1; yOffset <= 1; yOffset++)
+            {
+                for (int xOffset = -1; xOffset <= 1; xOffset++)
                 {
-                    for (int xOffset = -1; xOffset < 2; xOffset++)
+                    int xCheck = x + xOffset;
+                    int yCheck = y + yOffset;
+
+
+                    // if xOffset and yOffset are both equal to 0 then continue
+                    if (xOffset == 0 && yOffset == 0)
                     {
-                        int xCheck = x + xOffset;
-                        int yCheck = y + yOffset;
+                        continue;
+                    }
 
+                    // if xCheck is less than 0 then set to xLen - 1
+                    if (xCheck < 0)
+                    {
+                        xCheck = xLen - 1;
+                    }
 
-                        // if xOffset and yOffset are both equal to 0 then continue
-                        if (xOffset == 0 && yOffset == 0)
-                        {
-                            continue;
-                        }
+                    // if yCheck is less than 0 then set to yLen - 1
+                    if (yCheck < 0)
+                    {
+                        yCheck = yLen - 1;
+                    }
 
-                        // if xCheck is less than 0 then set to xLen - 1
-                        if (xCheck < 0)
-                        {
-                            xLen = -1;
-                        }
-
-                        // if yCheck is less than 0 then set to yLen - 1
-                        if (yCheck < 0)
-                        {
-                            yLen = -1;
-                        }
-
-                        // if xCheck is greater than or equal too xLen then set to 0
-                        if (xCheck >= xLen)
-                        {
-                            xCheck = 0;
-                        }
-                        // if yCheck is greater than or equal too yLen then set to 0
-                        if (yCheck >= yLen)
-                        {
-                            yCheck = 0;
-                        }
-                        if (universe[xCheck, yCheck] == true)
-                        {
-                            count++;
-                        }
+                    // if xCheck is greater than or equal too xLen then set to 0
+                    if (xCheck >= xLen)
+                    {
+                        xCheck = 0;
+                    }
+                    // if yCheck is greater than or equal too yLen then set to 0
+                    if (yCheck >= yLen)
+                    {
+                        yCheck = 0;
+                    }
+                    if (universe[xCheck, yCheck] == true)
+                    {
+                        count++;
                     }
                 }
-            
-       
+            }
+
+
             return count;
         }
 
@@ -379,6 +416,7 @@ namespace GameOfLife_Two
         {
             newBtn();
         }
+
         private void New_BTN_ToolStrip_Click(object sender, EventArgs e)
         {
             newBtn();
@@ -472,7 +510,7 @@ namespace GameOfLife_Two
 
             dlg.Color = gridColor;
 
-            if(DialogResult.OK == dlg.ShowDialog())
+            if (DialogResult.OK == dlg.ShowDialog())
             {
                 gridColor = dlg.Color;
             }
@@ -623,7 +661,7 @@ namespace GameOfLife_Two
         {
             timer.Enabled = false;
             SizeOfAreaDialog dlg = new SizeOfAreaDialog();
-            if(DialogResult.OK == dlg.ShowDialog())
+            if (DialogResult.OK == dlg.ShowDialog())
             {
                 universe = new bool[(int)dlg.width, (int)dlg.height];
                 scratchPad = new bool[(int)dlg.width, (int)dlg.height];
@@ -650,10 +688,10 @@ namespace GameOfLife_Two
                 Properties.Settings.Default.Save();
             }
 
-            
+
             graphicsPanel1.Invalidate();
         }
-        
+
         //Change Cell Colors *Completed
         private void CellColor_BTN_Click(object sender, EventArgs e)
         {
@@ -668,7 +706,33 @@ namespace GameOfLife_Two
 
         }
 
+        private void Finite_BTN_Click(object sender, EventArgs e)
+        {
+            if (Finite_BTN.Checked == false)
+            {
+                Finite_BTN.Checked = true;
 
+            }
+            if (Finite_BTN.Checked == true)
+            {
+                finiteStatus = true;
+                Toroidal_BTN.Checked = false;
+            }
+        }
+
+        private void Toroidal_BTN_Click(object sender, EventArgs e)
+        {
+            if (Toroidal_BTN.Checked == false)
+            {
+                Toroidal_BTN.Checked = true;
+            }
+            if (Toroidal_BTN.Checked == true)
+            {
+                finiteStatus = false;
+                Finite_BTN.Checked = false;
+            }
+
+        }
 
 
 
@@ -707,7 +771,7 @@ namespace GameOfLife_Two
                     // If the row begins with '!' then it is a comment
                     // and should be ignored.
                     if (row.StartsWith("!"))
-                    {    
+                    {
                         //Nothing needs to happen
                     }
 
@@ -874,6 +938,7 @@ namespace GameOfLife_Two
             graphicsPanel1.Invalidate();
 
         }
+
 
     }
 }
