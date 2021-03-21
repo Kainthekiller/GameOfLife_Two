@@ -18,9 +18,9 @@ using static System.Net.Mime.MediaTypeNames;
 //VIEW MENU ITEMS TOGGLE GRIDS ON and OFF *Completed
 //VIEW MENU ITEMS TOGGLE neighbor count *Completed 90 percent works
 //Infianty 
-//TODO: Context Sensitive Menu
+//Context Sensitive Menu
 //TODO: HUD
-//TODO: Reload and Reset Work better prolly just needs little extra code. 
+//Reload and Reset Work better prolly just needs little extra code. 
 
 
 
@@ -29,6 +29,7 @@ namespace GameOfLife_Two
     public partial class Game_Of_LIfe_Main : Form
     {
         bool finiteStatus = true;
+        bool showNeighborsStatus = true;
         int LivingCells = 0;
         // The universe array   //x = accross //y = down    
         bool[,] universe = new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
@@ -219,24 +220,33 @@ namespace GameOfLife_Two
 
 
                         //If Checked neighbors are turned off by empty string, otherwise the numbers show;
-                        if (neighborOnOff_CheckBox.Checked)
-                        {
-                            //No Graphics
+ 
 
-                        }
-                        else
-                        {
                             if(finiteStatus == true)
                             {
-                                nextDoor = CountNeighborsFinite(x, y).ToString();
+                            nextDoor = CountNeighborsFinite(x, y).ToString();
+
                             }
                             else if (finiteStatus == false)
                             {
                                 nextDoor = CountNeighborsToridal(x, y).ToString();
                             }
-                           
+                            if(showNeighborsStatus == true)
+                        {
                             e.Graphics.DrawString(nextDoor, font, Brushes.Black, cellRect, stringFormat);
                         }
+                            else if (showNeighborsStatus == false)
+                        {
+                            e.Graphics.DrawString("", font, Brushes.Black, cellRect, stringFormat);
+                        }
+
+                           
+
+
+                               
+                            
+                           
+                        
 
                     }
 
@@ -460,79 +470,42 @@ namespace GameOfLife_Two
         //Regular Randomizer *Completed
         private void RandomNoSeed_Click(object sender, EventArgs e)
         {
-            timer.Enabled = false;
-            var rando = new Random();
-            for (int y = 0; y < universe.GetLength(1); y++)
-            {
 
-                for (int x = 0; x < universe.GetLength(0); x++)
-                {
-
-                    universe[x, y] = rando.Next(100) % 2 == 0;
-                    Console.WriteLine(rando.Next(100));
-                    graphicsPanel1.Invalidate();
-
-                }
-            }
-
+            randomMethod();
 
         }
-
+        private void RightClick_Random_Click(object sender, EventArgs e)
+        {
+            randomMethod();
+        }
 
         //Seed Randomizer *Completed
         public void Random_Seed_Click(object sender, EventArgs e)
         {
-            timer.Enabled = false;
-            RandomSeedDialog dlg = new RandomSeedDialog();
-            if (DialogResult.OK == dlg.ShowDialog())
-            {
-                dlg.Seed = dlg.Seed;
-
-                //User input recorded
-                var rando = new Random((int)dlg.Seed);
-                for (int y = 0; y < universe.GetLength(1); y++)
-                {
-                    for (int x = 0; x < universe.GetLength(0); x++)
-                    {
-
-                        universe[x, y] = rando.Next(0, int.MaxValue) % 2 == 0;
-                        graphicsPanel1.Invalidate();
-
-                    }
-                }
-            }
+            randomSeedMethod();
         }
-
+        private void RightClick_Random_Seed_Click(object sender, EventArgs e)
+        {
+            randomSeedMethod();
+        }
         //Change Grid Color Logic *Completed
         private void GridColor_BTN_Click(object sender, EventArgs e)
         {
-            ColorDialog dlg = new ColorDialog();
-
-            dlg.Color = gridColor;
-
-            if (DialogResult.OK == dlg.ShowDialog())
-            {
-                gridColor = dlg.Color;
-            }
-
-            graphicsPanel1.Invalidate();
+            gridColorBTN();
         }
-
+        private void RightClick_Grid_Color_Click(object sender, EventArgs e)
+        {
+            gridColorBTN();
+        }
         //Background Color Logic *Completed
         private void BackGround_Color_BTN_Click(object sender, EventArgs e)
         {
-            ColorDialog dlg = new ColorDialog();
-
-            dlg.Color = graphicsPanel1.BackColor;
-
-            if (DialogResult.OK == dlg.ShowDialog())
-            {
-                graphicsPanel1.BackColor = dlg.Color;
-
-            }
-            graphicsPanel1.Invalidate();
+            backgroundColorBTN();
         }
-
+        private void rightClick_Background_Color_BTN_Click(object sender, EventArgs e)
+        {
+            backgroundColorBTN();
+        }
         //Overall Form Closes and this code is executed *Holds Settings*
         private void Game_Of_LIfe_Main_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -549,17 +522,22 @@ namespace GameOfLife_Two
         //Reset BTN 
         private void Reset_BTN_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Reset();
-            //Read Setting agian after reset
-            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+            resetMethod();
         }
-
+        private void RightClick_Reset_Click(object sender, EventArgs e)
+        {
+            resetMethod();
+        }
         //Reload BTN
         private void Reload_BTN_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Reload();
             //Read Setting Agian after Reload
             graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+            timer.Interval = Properties.Settings.Default.Timer;
+            gridColor = Properties.Settings.Default.GridColor;
+            cellColor = Properties.Settings.Default.CellColor;
+            graphicsPanel1.Invalidate();
         }
 
         //Adjust MillSec speed BTN *Complete
@@ -655,57 +633,44 @@ namespace GameOfLife_Two
             openBtn();
         }
 
-
+        //Show Neighbor BTN
+        private void RightClick_ShowNeighbor_Click(object sender, EventArgs e)
+        {
+            showNeighborsMethod();
+        }
+        private void ShowNeighbor_BTN_Click(object sender, EventArgs e)
+        {
+            showNeighborsMethod();
+        }
         //SIZE BTN Changes the size of the grid Examples Universe[30,30]; *Complete
         private void SizeofArea_BTN_Click(object sender, EventArgs e)
         {
-            timer.Enabled = false;
-            SizeOfAreaDialog dlg = new SizeOfAreaDialog();
-            if (DialogResult.OK == dlg.ShowDialog())
-            {
-                universe = new bool[(int)dlg.width, (int)dlg.height];
-                scratchPad = new bool[(int)dlg.width, (int)dlg.height];
-                graphicsPanel1.Invalidate();
-            }
-            Properties.Settings.Default.height = universe.GetLength(0);
-            Properties.Settings.Default.width = universe.GetLength(1);
-            Properties.Settings.Default.Save();
+            sizeOfAreaMethod();
         }
-
-        //Turns Grid On and Off Stops *Completed
-        private void GridOnOff_CheckedChanged(object sender, EventArgs e)
+        private void RightClick_Size_Of_Area_Click(object sender, EventArgs e)
         {
-            if (GridOnOff.Checked)
-            {
-                Properties.Settings.Default.GridColor = gridColor;
-                gridColor = Color.Empty;
-                GridColor_BTN.Enabled = false;
-            }
-            else
-            {
-                GridColor_BTN.Enabled = true;
-                gridColor = Properties.Settings.Default.GridColor;
-                Properties.Settings.Default.Save();
-            }
-
-
-            graphicsPanel1.Invalidate();
+            sizeOfAreaMethod();
+        }
+        //Turns Grid On and Off Stops *Completed
+        private void RightClick_Show_Grid_Click(object sender, EventArgs e)
+        {
+            gridOnOffMethod();
+        }
+        private void ShowGrid_BTN_Click(object sender, EventArgs e)
+        {
+            gridOnOffMethod();
         }
 
         //Change Cell Colors *Completed
         private void CellColor_BTN_Click(object sender, EventArgs e)
         {
-            ColorDialog dlg = new ColorDialog();
-            dlg.Color = cellColor;
-            if (DialogResult.OK == dlg.ShowDialog())
-            {
-                cellColor = dlg.Color;
-            }
-
-            graphicsPanel1.Invalidate();
+            cellColorBTN();
 
         }
-
+        private void RightClick_cellColor_Click_1(object sender, EventArgs e)
+        {
+            cellColorBTN();
+        }
         private void Finite_BTN_Click(object sender, EventArgs e)
         {
             if (Finite_BTN.Checked == false)
@@ -937,6 +902,157 @@ namespace GameOfLife_Two
             toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString() + " Cells Alive " + LivingCells.ToString();
             graphicsPanel1.Invalidate();
 
+        }
+        //Background Color Changer Method
+        private void backgroundColorBTN()
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = graphicsPanel1.BackColor;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                graphicsPanel1.BackColor = dlg.Color;
+
+            }
+            graphicsPanel1.Invalidate();
+        }
+        //Cell Color Changer Method
+        private void cellColorBTN()
+        {
+            ColorDialog dlg = new ColorDialog();
+            dlg.Color = cellColor;
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                cellColor = dlg.Color;
+            }
+
+            graphicsPanel1.Invalidate();
+        }
+        //Grid Color Changer Method
+        private void gridColorBTN()
+        {
+            ColorDialog dlg = new ColorDialog();
+
+            dlg.Color = gridColor;
+
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                gridColor = dlg.Color;
+            }
+
+            graphicsPanel1.Invalidate();
+        }
+        //Random No Seed
+        private void randomMethod()
+        {
+            timer.Enabled = false;
+            var rando = new Random();
+            for (int y = 0; y < universe.GetLength(1); y++)
+            {
+
+                for (int x = 0; x < universe.GetLength(0); x++)
+                {
+
+                    universe[x, y] = rando.Next(100) % 2 == 0;
+                    Console.WriteLine(rando.Next(100));
+                    graphicsPanel1.Invalidate();
+
+                }
+            }
+        }
+        //Random Seed
+        private void randomSeedMethod()
+        {
+            timer.Enabled = false;
+            RandomSeedDialog dlg = new RandomSeedDialog();
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                dlg.Seed = dlg.Seed;
+
+                //User input recorded
+                var rando = new Random((int)dlg.Seed);
+                for (int y = 0; y < universe.GetLength(1); y++)
+                {
+                    for (int x = 0; x < universe.GetLength(0); x++)
+                    {
+
+                        universe[x, y] = rando.Next(0, int.MaxValue) % 2 == 0;
+                        graphicsPanel1.Invalidate();
+
+                    }
+                }
+            }
+        }
+        //Reset Method
+        private void resetMethod()
+        {
+            Properties.Settings.Default.Reset();
+            //Read Setting agian after reset
+            graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
+            timer.Interval = Properties.Settings.Default.Timer;
+            universe = new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
+            gridColor = Properties.Settings.Default.GridColor;
+            cellColor = Properties.Settings.Default.CellColor;
+            graphicsPanel1.Invalidate();
+        }
+        //Size of Area Method
+        private void sizeOfAreaMethod()
+        {
+            timer.Enabled = false;
+            SizeOfAreaDialog dlg = new SizeOfAreaDialog();
+            if (DialogResult.OK == dlg.ShowDialog())
+            {
+                universe = new bool[(int)dlg.width, (int)dlg.height];
+                scratchPad = new bool[(int)dlg.width, (int)dlg.height];
+                graphicsPanel1.Invalidate();
+            }
+            Properties.Settings.Default.height = universe.GetLength(0);
+            Properties.Settings.Default.width = universe.GetLength(1);
+            Properties.Settings.Default.Save();
+        }
+        //Grid On and off Method
+        private void gridOnOffMethod()
+        {
+            if (RightClick_Show_Grid.Checked)
+            {
+                Properties.Settings.Default.GridColor = gridColor;
+                gridColor = Color.Empty;
+                GridColor_BTN.Enabled = false;
+                RightClick_Show_Grid.Checked = false ;
+                ShowGrid_BTN.Checked = false;
+            }
+            else if(!RightClick_Show_Grid.Checked)
+            {
+                GridColor_BTN.Enabled = true;
+                gridColor = Properties.Settings.Default.GridColor;
+                Properties.Settings.Default.Save();
+                RightClick_Show_Grid.Checked = true;
+                ShowGrid_BTN.Checked = true;
+            }
+
+
+            graphicsPanel1.Invalidate();
+        }
+        //Show Neighbors Method
+        private void showNeighborsMethod()
+        {
+            if (!RightClick_ShowNeighbor.Checked)
+            {
+                showNeighborsStatus = true;
+
+                RightClick_ShowNeighbor.Checked = true;
+                ShowNeighbor_BTN.Checked = true;
+                graphicsPanel1.Invalidate();
+            }
+            
+            else if (RightClick_ShowNeighbor.Checked)
+            {
+                showNeighborsStatus = false;
+                RightClick_ShowNeighbor.Checked = false;
+                ShowNeighbor_BTN.Checked = false;
+                graphicsPanel1.Invalidate();
+            }
         }
 
 

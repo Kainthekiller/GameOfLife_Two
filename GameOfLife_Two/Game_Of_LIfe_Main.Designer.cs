@@ -29,6 +29,7 @@ namespace GameOfLife_Two
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game_Of_LIfe_Main));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,12 +85,25 @@ namespace GameOfLife_Two
             this.NextBTN = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelGenerations = new System.Windows.Forms.ToolStripStatusLabel();
-            this.GridOnOff = new System.Windows.Forms.CheckBox();
-            this.neighborOnOff_CheckBox = new System.Windows.Forms.CheckBox();
+            this.rightClick_BTN = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.rightClick_Background_Color_BTN = new System.Windows.Forms.ToolStripMenuItem();
+            this.RightClick_cellColor = new System.Windows.Forms.ToolStripMenuItem();
+            this.RightClick_Grid_Color = new System.Windows.Forms.ToolStripMenuItem();
+            this.RightClick_Size_Of_Area = new System.Windows.Forms.ToolStripMenuItem();
+            this.randomizerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RightClick_Random = new System.Windows.Forms.ToolStripMenuItem();
+            this.RightClick_Random_Seed = new System.Windows.Forms.ToolStripMenuItem();
+            this.RightClick_Reset = new System.Windows.Forms.ToolStripMenuItem();
+            this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.graphicsPanel1 = new GameOfLife_Two.GraphicsPanel();
+            this.RightClick_ShowNeighbor = new System.Windows.Forms.ToolStripMenuItem();
+            this.RightClick_Show_Grid = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowGrid_BTN = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowNeighbor_BTN = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.rightClick_BTN.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -106,7 +120,7 @@ namespace GameOfLife_Two
             this.universeBehaviorToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2253, 33);
+            this.menuStrip1.Size = new System.Drawing.Size(2613, 33);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -122,7 +136,7 @@ namespace GameOfLife_Two
             this.toolStripSeparator2,
             this.ExitBTN});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 32);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // New_BTN
@@ -190,7 +204,7 @@ namespace GameOfLife_Two
             this.customizeToolStripMenuItem,
             this.optionsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(69, 32);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // customizeToolStripMenuItem
@@ -214,7 +228,7 @@ namespace GameOfLife_Two
             this.toolStripSeparator5,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 32);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // contentsToolStripMenuItem
@@ -253,7 +267,7 @@ namespace GameOfLife_Two
             this.toolStripSeparator12,
             this.Random_Seed});
             this.randomToolStripMenuItem.Name = "randomToolStripMenuItem";
-            this.randomToolStripMenuItem.Size = new System.Drawing.Size(123, 32);
+            this.randomToolStripMenuItem.Size = new System.Drawing.Size(123, 29);
             this.randomToolStripMenuItem.Text = "Randomizer";
             // 
             // RandomNoSeed
@@ -288,71 +302,74 @@ namespace GameOfLife_Two
             this.toolStripSeparator15,
             this.milliseconds_BTN});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(92, 32);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // BackGround_Color_BTN
             // 
             this.BackGround_Color_BTN.Name = "BackGround_Color_BTN";
-            this.BackGround_Color_BTN.Size = new System.Drawing.Size(258, 34);
+            this.BackGround_Color_BTN.Size = new System.Drawing.Size(270, 34);
             this.BackGround_Color_BTN.Text = "&BackGround Color";
             this.BackGround_Color_BTN.Click += new System.EventHandler(this.BackGround_Color_BTN_Click);
             // 
             // CellColor_BTN
             // 
             this.CellColor_BTN.Name = "CellColor_BTN";
-            this.CellColor_BTN.Size = new System.Drawing.Size(258, 34);
+            this.CellColor_BTN.Size = new System.Drawing.Size(270, 34);
             this.CellColor_BTN.Text = "&Cell Color";
             this.CellColor_BTN.Click += new System.EventHandler(this.CellColor_BTN_Click);
             // 
             // GridColor_BTN
             // 
             this.GridColor_BTN.Name = "GridColor_BTN";
-            this.GridColor_BTN.Size = new System.Drawing.Size(258, 34);
+            this.GridColor_BTN.Size = new System.Drawing.Size(270, 34);
             this.GridColor_BTN.Text = "Grid Color";
             this.GridColor_BTN.Click += new System.EventHandler(this.GridColor_BTN_Click);
             // 
             // optionsToolStripMenuItem1
             // 
+            this.optionsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ShowGrid_BTN,
+            this.ShowNeighbor_BTN});
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
-            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(258, 34);
+            this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
             this.optionsToolStripMenuItem1.Text = "Options";
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(255, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(267, 6);
             // 
             // Reset_BTN
             // 
             this.Reset_BTN.Name = "Reset_BTN";
-            this.Reset_BTN.Size = new System.Drawing.Size(258, 34);
+            this.Reset_BTN.Size = new System.Drawing.Size(270, 34);
             this.Reset_BTN.Text = "Reset";
             this.Reset_BTN.Click += new System.EventHandler(this.Reset_BTN_Click);
             // 
             // Reload_BTN
             // 
             this.Reload_BTN.Name = "Reload_BTN";
-            this.Reload_BTN.Size = new System.Drawing.Size(258, 34);
+            this.Reload_BTN.Size = new System.Drawing.Size(270, 34);
             this.Reload_BTN.Text = "Reload";
             this.Reload_BTN.Click += new System.EventHandler(this.Reload_BTN_Click);
             // 
             // toolStripSeparator15
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
-            this.toolStripSeparator15.Size = new System.Drawing.Size(255, 6);
+            this.toolStripSeparator15.Size = new System.Drawing.Size(267, 6);
             // 
             // milliseconds_BTN
             // 
             this.milliseconds_BTN.Name = "milliseconds_BTN";
-            this.milliseconds_BTN.Size = new System.Drawing.Size(258, 34);
+            this.milliseconds_BTN.Size = new System.Drawing.Size(270, 34);
             this.milliseconds_BTN.Text = "Milli&Seconds";
             this.milliseconds_BTN.Click += new System.EventHandler(this.milliseconds_BTN_Click);
             // 
             // SizeofArea_BTN
             // 
             this.SizeofArea_BTN.Name = "SizeofArea_BTN";
-            this.SizeofArea_BTN.Size = new System.Drawing.Size(122, 32);
+            this.SizeofArea_BTN.Size = new System.Drawing.Size(122, 29);
             this.SizeofArea_BTN.Text = "Size of Area";
             this.SizeofArea_BTN.Click += new System.EventHandler(this.SizeofArea_BTN_Click);
             // 
@@ -370,14 +387,14 @@ namespace GameOfLife_Two
             this.Finite_BTN.Checked = true;
             this.Finite_BTN.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Finite_BTN.Name = "Finite_BTN";
-            this.Finite_BTN.Size = new System.Drawing.Size(270, 34);
+            this.Finite_BTN.Size = new System.Drawing.Size(177, 34);
             this.Finite_BTN.Text = "Finite";
             this.Finite_BTN.Click += new System.EventHandler(this.Finite_BTN_Click);
             // 
             // Toroidal_BTN
             // 
             this.Toroidal_BTN.Name = "Toroidal_BTN";
-            this.Toroidal_BTN.Size = new System.Drawing.Size(270, 34);
+            this.Toroidal_BTN.Size = new System.Drawing.Size(177, 34);
             this.Toroidal_BTN.Text = "Toroidal";
             this.Toroidal_BTN.Click += new System.EventHandler(this.Toroidal_BTN_Click);
             // 
@@ -402,7 +419,7 @@ namespace GameOfLife_Two
             this.toolStrip1.Location = new System.Drawing.Point(0, 33);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(2253, 33);
+            this.toolStrip1.Size = new System.Drawing.Size(2613, 33);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             this.toolStrip1.Click += new System.EventHandler(this.StopBTN_Click);
@@ -413,7 +430,7 @@ namespace GameOfLife_Two
             this.New_BTN_ToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("New_BTN_ToolStrip.Image")));
             this.New_BTN_ToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.New_BTN_ToolStrip.Name = "New_BTN_ToolStrip";
-            this.New_BTN_ToolStrip.Size = new System.Drawing.Size(34, 33);
+            this.New_BTN_ToolStrip.Size = new System.Drawing.Size(34, 28);
             this.New_BTN_ToolStrip.Text = "&New";
             this.New_BTN_ToolStrip.Click += new System.EventHandler(this.New_BTN_ToolStrip_Click);
             // 
@@ -423,7 +440,7 @@ namespace GameOfLife_Two
             this.Open_BTN_ToolStrip.Image = ((System.Drawing.Image)(resources.GetObject("Open_BTN_ToolStrip.Image")));
             this.Open_BTN_ToolStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.Open_BTN_ToolStrip.Name = "Open_BTN_ToolStrip";
-            this.Open_BTN_ToolStrip.Size = new System.Drawing.Size(34, 33);
+            this.Open_BTN_ToolStrip.Size = new System.Drawing.Size(34, 28);
             this.Open_BTN_ToolStrip.Text = "&Open";
             this.Open_BTN_ToolStrip.Click += new System.EventHandler(this.Open_BTN_ToolStrip_Click);
             // 
@@ -433,14 +450,14 @@ namespace GameOfLife_Two
             this.save_ToolStrip_BTN.Image = ((System.Drawing.Image)(resources.GetObject("save_ToolStrip_BTN.Image")));
             this.save_ToolStrip_BTN.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.save_ToolStrip_BTN.Name = "save_ToolStrip_BTN";
-            this.save_ToolStrip_BTN.Size = new System.Drawing.Size(34, 33);
+            this.save_ToolStrip_BTN.Size = new System.Drawing.Size(34, 28);
             this.save_ToolStrip_BTN.Text = "&Save";
             this.save_ToolStrip_BTN.Click += new System.EventHandler(this.save_ToolStrip_BTN_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 33);
             // 
             // cutToolStripButton
             // 
@@ -448,7 +465,7 @@ namespace GameOfLife_Two
             this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
             this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.cutToolStripButton.Name = "cutToolStripButton";
-            this.cutToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.cutToolStripButton.Size = new System.Drawing.Size(34, 28);
             this.cutToolStripButton.Text = "C&ut";
             // 
             // copyToolStripButton
@@ -457,7 +474,7 @@ namespace GameOfLife_Two
             this.copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
             this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.copyToolStripButton.Name = "copyToolStripButton";
-            this.copyToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.copyToolStripButton.Size = new System.Drawing.Size(34, 28);
             this.copyToolStripButton.Text = "&Copy";
             // 
             // pasteToolStripButton
@@ -466,13 +483,13 @@ namespace GameOfLife_Two
             this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
             this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.pasteToolStripButton.Name = "pasteToolStripButton";
-            this.pasteToolStripButton.Size = new System.Drawing.Size(34, 33);
+            this.pasteToolStripButton.Size = new System.Drawing.Size(34, 28);
             this.pasteToolStripButton.Text = "&Paste";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 33);
             // 
             // toolStripButton1
             // 
@@ -480,7 +497,7 @@ namespace GameOfLife_Two
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(34, 33);
+            this.toolStripButton1.Size = new System.Drawing.Size(34, 28);
             this.toolStripButton1.Text = "He&lp";
             // 
             // StartBTN
@@ -491,14 +508,14 @@ namespace GameOfLife_Two
             this.StartBTN.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.StartBTN.Name = "StartBTN";
             this.StartBTN.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
-            this.StartBTN.Size = new System.Drawing.Size(128, 33);
+            this.StartBTN.Size = new System.Drawing.Size(128, 28);
             this.StartBTN.Text = "Start";
             this.StartBTN.Click += new System.EventHandler(this.StartBTN_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(6, 33);
             // 
             // toolStripButton2
             // 
@@ -508,13 +525,13 @@ namespace GameOfLife_Two
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
-            this.toolStripButton2.Size = new System.Drawing.Size(128, 33);
+            this.toolStripButton2.Size = new System.Drawing.Size(128, 28);
             this.toolStripButton2.Text = "Pause";
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 33);
             // 
             // NextBTN
             // 
@@ -525,7 +542,7 @@ namespace GameOfLife_Two
             this.NextBTN.ImageTransparentColor = System.Drawing.Color.Gold;
             this.NextBTN.Name = "NextBTN";
             this.NextBTN.Padding = new System.Windows.Forms.Padding(100, 0, 0, 0);
-            this.NextBTN.Size = new System.Drawing.Size(128, 33);
+            this.NextBTN.Size = new System.Drawing.Size(128, 28);
             this.NextBTN.Text = "Stop";
             this.NextBTN.ToolTipText = "Next";
             this.NextBTN.Click += new System.EventHandler(this.NextBTN_Click);
@@ -535,10 +552,10 @@ namespace GameOfLife_Two
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelGenerations});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1286);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1384);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(2253, 32);
+            this.statusStrip1.Size = new System.Drawing.Size(2613, 32);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -548,46 +565,139 @@ namespace GameOfLife_Two
             this.toolStripStatusLabelGenerations.Size = new System.Drawing.Size(305, 25);
             this.toolStripStatusLabelGenerations.Text = "Current Generations = 0 Cells Alive 0 ";
             // 
-            // GridOnOff
+            // rightClick_BTN
             // 
-            this.GridOnOff.AutoSize = true;
-            this.GridOnOff.Location = new System.Drawing.Point(1217, 50);
-            this.GridOnOff.Name = "GridOnOff";
-            this.GridOnOff.Size = new System.Drawing.Size(91, 24);
-            this.GridOnOff.TabIndex = 4;
-            this.GridOnOff.Text = "Grid Off";
-            this.GridOnOff.UseVisualStyleBackColor = true;
-            this.GridOnOff.CheckedChanged += new System.EventHandler(this.GridOnOff_CheckedChanged);
+            this.rightClick_BTN.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.rightClick_BTN.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rightClick_Background_Color_BTN,
+            this.RightClick_cellColor,
+            this.RightClick_Grid_Color,
+            this.RightClick_Size_Of_Area,
+            this.randomizerToolStripMenuItem,
+            this.RightClick_Reset,
+            this.RightClick_ShowNeighbor,
+            this.RightClick_Show_Grid});
+            this.rightClick_BTN.Name = "rightClick_BTN";
+            this.rightClick_BTN.Size = new System.Drawing.Size(228, 260);
             // 
-            // neighborOnOff_CheckBox
+            // rightClick_Background_Color_BTN
             // 
-            this.neighborOnOff_CheckBox.AutoSize = true;
-            this.neighborOnOff_CheckBox.Location = new System.Drawing.Point(960, 50);
-            this.neighborOnOff_CheckBox.Name = "neighborOnOff_CheckBox";
-            this.neighborOnOff_CheckBox.Size = new System.Drawing.Size(163, 24);
-            this.neighborOnOff_CheckBox.TabIndex = 5;
-            this.neighborOnOff_CheckBox.Text = "Neighbor View Off";
-            this.neighborOnOff_CheckBox.UseVisualStyleBackColor = true;
+            this.rightClick_Background_Color_BTN.Name = "rightClick_Background_Color_BTN";
+            this.rightClick_Background_Color_BTN.Size = new System.Drawing.Size(227, 32);
+            this.rightClick_Background_Color_BTN.Text = "Background Color";
+            this.rightClick_Background_Color_BTN.Click += new System.EventHandler(this.rightClick_Background_Color_BTN_Click);
+            // 
+            // RightClick_cellColor
+            // 
+            this.RightClick_cellColor.Name = "RightClick_cellColor";
+            this.RightClick_cellColor.Size = new System.Drawing.Size(227, 32);
+            this.RightClick_cellColor.Text = "Cell Color";
+            this.RightClick_cellColor.Click += new System.EventHandler(this.RightClick_cellColor_Click_1);
+            // 
+            // RightClick_Grid_Color
+            // 
+            this.RightClick_Grid_Color.Name = "RightClick_Grid_Color";
+            this.RightClick_Grid_Color.Size = new System.Drawing.Size(227, 32);
+            this.RightClick_Grid_Color.Text = "Grid Color";
+            this.RightClick_Grid_Color.Click += new System.EventHandler(this.RightClick_Grid_Color_Click);
+            // 
+            // RightClick_Size_Of_Area
+            // 
+            this.RightClick_Size_Of_Area.Name = "RightClick_Size_Of_Area";
+            this.RightClick_Size_Of_Area.Size = new System.Drawing.Size(227, 32);
+            this.RightClick_Size_Of_Area.Text = "Size of Area";
+            this.RightClick_Size_Of_Area.Click += new System.EventHandler(this.RightClick_Size_Of_Area_Click);
+            // 
+            // randomizerToolStripMenuItem
+            // 
+            this.randomizerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RightClick_Random,
+            this.RightClick_Random_Seed});
+            this.randomizerToolStripMenuItem.Name = "randomizerToolStripMenuItem";
+            this.randomizerToolStripMenuItem.Size = new System.Drawing.Size(227, 32);
+            this.randomizerToolStripMenuItem.Text = "Randomizer";
+            // 
+            // RightClick_Random
+            // 
+            this.RightClick_Random.Name = "RightClick_Random";
+            this.RightClick_Random.Size = new System.Drawing.Size(226, 34);
+            this.RightClick_Random.Text = "Random";
+            this.RightClick_Random.Click += new System.EventHandler(this.RightClick_Random_Click);
+            // 
+            // RightClick_Random_Seed
+            // 
+            this.RightClick_Random_Seed.Name = "RightClick_Random_Seed";
+            this.RightClick_Random_Seed.Size = new System.Drawing.Size(226, 34);
+            this.RightClick_Random_Seed.Text = "Seed Random";
+            this.RightClick_Random_Seed.Click += new System.EventHandler(this.RightClick_Random_Seed_Click);
+            // 
+            // RightClick_Reset
+            // 
+            this.RightClick_Reset.Name = "RightClick_Reset";
+            this.RightClick_Reset.Size = new System.Drawing.Size(227, 32);
+            this.RightClick_Reset.Text = "Reset";
+            this.RightClick_Reset.Click += new System.EventHandler(this.RightClick_Reset_Click);
+            // 
+            // backgroundColorToolStripMenuItem
+            // 
+            this.backgroundColorToolStripMenuItem.Name = "backgroundColorToolStripMenuItem";
+            this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(240, 32);
+            this.backgroundColorToolStripMenuItem.Text = "Background Color";
             // 
             // graphicsPanel1
             // 
             this.graphicsPanel1.BackColor = System.Drawing.SystemColors.Window;
+            this.graphicsPanel1.ContextMenuStrip = this.rightClick_BTN;
             this.graphicsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.graphicsPanel1.Location = new System.Drawing.Point(0, 66);
             this.graphicsPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.graphicsPanel1.Name = "graphicsPanel1";
-            this.graphicsPanel1.Size = new System.Drawing.Size(2253, 1220);
+            this.graphicsPanel1.Size = new System.Drawing.Size(2613, 1318);
             this.graphicsPanel1.TabIndex = 3;
             this.graphicsPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.graphicsPanel1_Paint);
             this.graphicsPanel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.graphicsPanel1_MouseClick);
+            // 
+            // RightClick_ShowNeighbor
+            // 
+            this.RightClick_ShowNeighbor.Checked = true;
+            this.RightClick_ShowNeighbor.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.RightClick_ShowNeighbor.Name = "RightClick_ShowNeighbor";
+            this.RightClick_ShowNeighbor.Size = new System.Drawing.Size(227, 32);
+            this.RightClick_ShowNeighbor.Text = "Show Neighbor";
+            this.RightClick_ShowNeighbor.Click += new System.EventHandler(this.RightClick_ShowNeighbor_Click);
+            // 
+            // RightClick_Show_Grid
+            // 
+            this.RightClick_Show_Grid.Checked = true;
+            this.RightClick_Show_Grid.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.RightClick_Show_Grid.Name = "RightClick_Show_Grid";
+            this.RightClick_Show_Grid.Size = new System.Drawing.Size(227, 32);
+            this.RightClick_Show_Grid.Text = "Show Grid";
+            this.RightClick_Show_Grid.Click += new System.EventHandler(this.RightClick_Show_Grid_Click);
+            // 
+            // ShowGrid_BTN
+            // 
+            this.ShowGrid_BTN.Checked = true;
+            this.ShowGrid_BTN.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ShowGrid_BTN.Name = "ShowGrid_BTN";
+            this.ShowGrid_BTN.Size = new System.Drawing.Size(270, 34);
+            this.ShowGrid_BTN.Text = "Show Grid";
+            this.ShowGrid_BTN.Click += new System.EventHandler(this.ShowGrid_BTN_Click);
+            // 
+            // ShowNeighbor_BTN
+            // 
+            this.ShowNeighbor_BTN.Checked = true;
+            this.ShowNeighbor_BTN.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ShowNeighbor_BTN.Name = "ShowNeighbor_BTN";
+            this.ShowNeighbor_BTN.Size = new System.Drawing.Size(270, 34);
+            this.ShowNeighbor_BTN.Text = "Show Neighbor";
+            this.ShowNeighbor_BTN.Click += new System.EventHandler(this.ShowNeighbor_BTN_Click);
             // 
             // Game_Of_LIfe_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2253, 1318);
-            this.Controls.Add(this.neighborOnOff_CheckBox);
-            this.Controls.Add(this.GridOnOff);
+            this.ClientSize = new System.Drawing.Size(2613, 1416);
             this.Controls.Add(this.graphicsPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
@@ -603,6 +713,7 @@ namespace GameOfLife_Two
             this.toolStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.rightClick_BTN.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -662,11 +773,23 @@ namespace GameOfLife_Two
         private System.Windows.Forms.ToolStripMenuItem milliseconds_BTN;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem SizeofArea_BTN;
-        private System.Windows.Forms.CheckBox GridOnOff;
-        private System.Windows.Forms.CheckBox neighborOnOff_CheckBox;
         private System.Windows.Forms.ToolStripMenuItem universeBehaviorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Finite_BTN;
         private System.Windows.Forms.ToolStripMenuItem Toroidal_BTN;
+        private System.Windows.Forms.ToolStripMenuItem backgroundColorToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip rightClick_BTN;
+        private System.Windows.Forms.ToolStripMenuItem rightClick_Background_Color_BTN;
+        private System.Windows.Forms.ToolStripMenuItem RightClick_cellColor;
+        private System.Windows.Forms.ToolStripMenuItem RightClick_Grid_Color;
+        private System.Windows.Forms.ToolStripMenuItem RightClick_Size_Of_Area;
+        private System.Windows.Forms.ToolStripMenuItem randomizerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem RightClick_Random;
+        private System.Windows.Forms.ToolStripMenuItem RightClick_Random_Seed;
+        private System.Windows.Forms.ToolStripMenuItem RightClick_Reset;
+        private System.Windows.Forms.ToolStripMenuItem RightClick_ShowNeighbor;
+        private System.Windows.Forms.ToolStripMenuItem RightClick_Show_Grid;
+        private System.Windows.Forms.ToolStripMenuItem ShowGrid_BTN;
+        private System.Windows.Forms.ToolStripMenuItem ShowNeighbor_BTN;
     }
 }
 
