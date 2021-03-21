@@ -10,19 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 
-//Saving Current Universe *Complete currentrow.cell desktop or Save as 
-//Opening a previously saved universe *Completed
-//Show Number of Liveing Cells *Status Strip *Completed
-//Control Milliseconds between each new generation Option *Completed
-//Control The current size of the universe *Completed
-//VIEW MENU ITEMS TOGGLE GRIDS ON and OFF *Completed
-//VIEW MENU ITEMS TOGGLE neighbor count *Completed 90 percent works
-//Infianty 
-//Context Sensitive Menu
-//TODO: HUD
-//Reload and Reset Work better prolly just needs little extra code. 
-
-
 
 namespace GameOfLife_Two
 {
@@ -30,6 +17,7 @@ namespace GameOfLife_Two
     {
         bool finiteStatus = true;
         bool showNeighborsStatus = true;
+        bool showHudStatus = true;
         int LivingCells = 0;
         // The universe array   //x = accross //y = down    
         bool[,] universe = new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
@@ -170,6 +158,8 @@ namespace GameOfLife_Two
 
 
 
+
+
         // The event called by the timer every Interval milliseconds. *Complete
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -178,9 +168,10 @@ namespace GameOfLife_Two
         }
 
 
-        //Prolly Needs Some Love *****
+        //Main Graphics
         private void graphicsPanel1_Paint(object sender, PaintEventArgs e)
         {
+
             // Calculate the width and height of each cell in pixels
             // CELL WIDTH = WINDOW WIDTH / NUMBER OF CELLS IN X
             float cellWidth = (float)graphicsPanel1.ClientSize.Width / (float)universe.GetLength(0);
@@ -219,7 +210,7 @@ namespace GameOfLife_Two
                         Rectangle rect = new Rectangle(0, 0, 100, 100);
 
 
-                        //If Checked neighbors are turned off by empty string, otherwise the numbers show;
+                        //Useing a couple method and check status I can make graphics work for me
  
 
                             if(finiteStatus == true)
@@ -240,13 +231,10 @@ namespace GameOfLife_Two
                             e.Graphics.DrawString("", font, Brushes.Black, cellRect, stringFormat);
                         }
 
-                           
+            
 
 
-                               
-                            
-                           
-                        
+
 
                     }
 
@@ -256,14 +244,44 @@ namespace GameOfLife_Two
                 }
 
             }
+     
 
             // Cleaning up pens and brushes
             gridPen.Dispose();
             cellBrush.Dispose();
         }
 
+        //HUD LOGIC 
+        private void HUD_Paint(object sender, PaintEventArgs e)
+        {
+            SolidBrush s = new SolidBrush(Color.Blue);
+            Graphics g = graphicsPanel1.CreateGraphics();
+            FontFamily ff = new FontFamily("Arial");
+            System.Drawing.Font myFont = new System.Drawing.Font(ff, 12f);
+            if (showHudStatus == true)
+            {
+                g.DrawString("Current Generation " + generations, myFont, s, 0, 0);
+                g.DrawString("Cell Count " + LivingCells.ToString(), myFont, s, 0, 20);
+                if (finiteStatus == true)
+                {
+                    g.DrawString("Boundary Type Finite", myFont, s, 0, 40);
 
-        //Click true = false and false = true; Knows where you clicked *Not Complete
+                }
+                else if (finiteStatus == false)
+                {
+                    g.DrawString("Boundary Type Toroidal", myFont, s, 0, 40);
+
+                }
+
+                g.DrawString("Universe Size " + "Width " + universe.GetLength(0) + " Height " + universe.GetLength(1), myFont, s, 0, 60);
+            }
+            else if (showHudStatus == false)
+            {
+                //Do nothing HUD dose not show!!!
+            }
+        }
+
+        //Click true = false and false = true; Knows where you clicked 
         private void graphicsPanel1_MouseClick(object sender, MouseEventArgs e)
         {
             // If the left mouse button was clicked
@@ -292,7 +310,7 @@ namespace GameOfLife_Two
         //______________________________________________________________________________________________________________________________________________________________
 
 
-        // Count Neighbors Methods()  >>>>>>> FINITE***COMPLETED***  >>>>>>> TOROIDAL ***NOT COMPLETED*** AKA MR INFINANTY STONE
+        // Count Neighbors Methods()  >>>>>>> FINITE***COMPLETED***  >>>>>>> TOROIDAL ***COMPLETED*** AKA MR Marval
 
         //______________________________________________________________________________________________________________________________________________________________
 
@@ -671,35 +689,47 @@ namespace GameOfLife_Two
         {
             cellColorBTN();
         }
+
+        //Universe Type Buttons 
         private void Finite_BTN_Click(object sender, EventArgs e)
         {
             if (Finite_BTN.Checked == false)
             {
                 Finite_BTN.Checked = true;
-
+                graphicsPanel1.Invalidate();
             }
             if (Finite_BTN.Checked == true)
             {
                 finiteStatus = true;
                 Toroidal_BTN.Checked = false;
+                graphicsPanel1.Invalidate();
             }
         }
-
         private void Toroidal_BTN_Click(object sender, EventArgs e)
         {
             if (Toroidal_BTN.Checked == false)
             {
                 Toroidal_BTN.Checked = true;
+                graphicsPanel1.Invalidate();
             }
             if (Toroidal_BTN.Checked == true)
             {
                 finiteStatus = false;
                 Finite_BTN.Checked = false;
+                graphicsPanel1.Invalidate();
             }
 
         }
 
-
+        //Show Hud BTN
+        private void RightClick_ShowHud_Click(object sender, EventArgs e)
+        {
+            showHudMethod();
+        }
+        private void ShowHud_BTN_Click(object sender, EventArgs e)
+        {
+            showHudMethod();
+        }
 
         //______________________________________________________________________________________________________________________________________________________________
 
@@ -901,7 +931,6 @@ namespace GameOfLife_Two
             //updates status strip Generations; *NEW CLICKED*
             toolStripStatusLabelGenerations.Text = "Current Generations = " + generations.ToString() + " Cells Alive " + LivingCells.ToString();
             graphicsPanel1.Invalidate();
-
         }
         //Background Color Changer Method
         private void backgroundColorBTN()
@@ -987,11 +1016,13 @@ namespace GameOfLife_Two
         //Reset Method
         private void resetMethod()
         {
+            timer.Enabled = false;
             Properties.Settings.Default.Reset();
             //Read Setting agian after reset
             graphicsPanel1.BackColor = Properties.Settings.Default.BackGroundColor;
             timer.Interval = Properties.Settings.Default.Timer;
             universe = new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
+           scratchPad= new bool[Properties.Settings.Default.width, Properties.Settings.Default.height];
             gridColor = Properties.Settings.Default.GridColor;
             cellColor = Properties.Settings.Default.CellColor;
             graphicsPanel1.Invalidate();
@@ -1054,7 +1085,26 @@ namespace GameOfLife_Two
                 graphicsPanel1.Invalidate();
             }
         }
+        //Show Hud Method
+        private void showHudMethod()
+        {
+            if (!RightClick_ShowHud.Checked)
+            {
+                showHudStatus = true;
 
+                RightClick_ShowHud.Checked = true;
+                ShowHud_BTN.Checked = true;
+                graphicsPanel1.Invalidate();
+            }
+
+            else if (RightClick_ShowHud.Checked)
+            {
+                showHudStatus = false;
+                RightClick_ShowHud.Checked = false;
+                ShowHud_BTN.Checked = false;
+                graphicsPanel1.Invalidate();
+            }
+        }
 
     }
 }
